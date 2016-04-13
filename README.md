@@ -9,7 +9,7 @@ Execute pin, then it'll search through it's directory for .iap files.
 # Translations
 In 1.1.5.0 translation support were finally added. You can sumbit it on your language using the following form :
 
-```
+```json
 {
     "InstallationProgressBarFormat": "{0} de {1} foram instalados. ({2}%)",
     "InstallListLoaded": "Lista de instalação lida.",
@@ -24,14 +24,16 @@ then save it to yourlanguage.tap, that is .tap is the default language extension
 
 # Arguments
 Current supported args are
+
 ```
--noinstall (run the program but ignore installations)
--noargs (install ignoring any arguments)
--fix (try to update any .iap files)
 -ignore=package1;package2... (ignore packages)
+-lg=language (type in the language to load without the extension)
+-create (launch the windows form creation menu for installation files)
 ```
 
 # Installation File (.iap)
+The installation file goes by the extension .iap and contains the instructions to install the desired program/package. To create your own, you'll have to use the following form :
+
 ```json
 {
   "Packagename": "7Zip",
@@ -55,7 +57,6 @@ Current supported args are
 - InstallationIndex: The installation priority.
 
 # Roadmap
-- Add a installation file creator.
-- Add full chocolatey package support.
+- Add a installation file creator. **(Prototyped)**
+- Add full chocolatey package support. **(Prototyped)**
 - Add upate function.
-- Add translation support. (Currently all debug text are in PT-BR)
