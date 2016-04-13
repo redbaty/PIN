@@ -6,6 +6,22 @@ Package Installer is, as the name suggests, a offline package installer. It uses
 # Usage
 Execute pin, then it'll search through it's directory for .iap files.
 
+# Translations
+In 1.1.5.0 translation support were finally added. You can sumbit it on your language using the following form :
+
+```
+{
+    "InstallationProgressBarFormat": "{0} de {1} foram instalados. ({2}%)",
+    "InstallListLoaded": "Lista de instalação lida.",
+    "InstallationSuccess": "Sucesso !",
+    "InstallationPackageInvalid": "Pacotes inválidos : {0}",
+    "DownloadProgressBarFormat": "Baixando {0:F}MB de {1:F}MB. ({2}%)",
+    "GithubInformation": "Nos ajude no github : {0}"
+}
+```
+
+then save it to yourlanguage.tap, that is .tap is the default language extension.
+
 # Arguments
 Current supported args are
 ```
