@@ -1,0 +1,26 @@
+c:\users\marco\documents\visual studio 2013\Projects\PIN\PIN\bin\Debug\PIN.exe.config
+C:\Users\marco\documents\visual studio 2013\Projects\PIN\PIN\bin\Debug\PIN.exe
+C:\Users\marco\documents\visual studio 2013\Projects\PIN\PIN\bin\Debug\PIN.pdb
+C:\Users\marco\documents\visual studio 2013\Projects\PIN\PIN\obj\Debug\PIN.csprojResolveAssemblyReference.cache
+C:\Users\marco\documents\visual studio 2013\Projects\PIN\PIN\obj\Debug\PIN.exe
+C:\Users\marco\documents\visual studio 2013\Projects\PIN\PIN\obj\Debug\PIN.pdb
+C:\Users\marco\documents\visual studio 2013\Projects\PIN\PIN\bin\Debug\Newtonsoft.Json.dll
+C:\Users\marco\documents\visual studio 2013\Projects\PIN\PIN\bin\Debug\Newtonsoft.Json.xml
+C:\Users\marco\Documents\Visual Studio 2013\Projects\PIN\PIN\bin\Debug\Ionic.Zip.dll
+C:\Users\marco\Documents\Visual Studio 2013\Projects\PIN\PIN\bin\Debug\Ionic.Zip.xml
+C:\Users\marco\Documents\Visual Studio 2013\Projects\PIN\PIN\bin\Debug\LinqBridge.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.csproj.GenerateResource.Cache
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.exe.config
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.exe
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Ionic.Zip.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\LinqBridge.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Newtonsoft.Json.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Ionic.Zip.xml
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Newtonsoft.Json.xml
+C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.csprojResolveAssemblyReference.cache
+C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.exe
+C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Konsole.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Konsole.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.Core.Forms.iCreator.resources
