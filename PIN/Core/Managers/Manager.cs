@@ -72,12 +72,12 @@ namespace PIN.Core.Managers
         public void StartInstallation(bool args = true)
         {
             ProgressBar.FORMAT = Translation.InstallationProgressBarFormat;
-            ProgressBar = new ProgressBar(InstallList.Count);
+            ProgressBar = new ProgressBar(InstallList.Count - 1);
 
             for (int index = 0; index < InstallList.Count; index++)
             {
                 IAP iap = InstallList[index];
-                ProgressBar.Refresh(index++, iap.Packagename);
+                ProgressBar.Refresh(index, iap.Packagename);
                 if (ProgressChanged != null) ProgressChanged(new List<string> {iap.Packagename}, NotificationType.INSTALLATIONPROGRESS);
                 iap.Install(args);
             }

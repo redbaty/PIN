@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml;
 using Newtonsoft.Json;
+using PIN.Core.jModels;
 using PIN.Core.Packages;
 
 namespace PIN.Core
@@ -51,7 +52,7 @@ namespace PIN.Core
         {
             Version version = typeof (Program).Assembly.GetName().Version;
             WriteinColor(ConsoleColor.Green, string.Format("PIN {0}", version));
-            WriteinColor(ConsoleColor.Gray, "Help us at github : https://github.com/redbaty/PIN/\n");
+            WriteinColor(ConsoleColor.Gray, string.Format(Translation.GithubInformation, "https://github.com/redbaty/PIN/") + "\n");
         }
 
         /// <summary>

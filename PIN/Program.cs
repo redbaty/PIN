@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using Newtonsoft.Json;
 using PIN.Core;
 using PIN.Core.Forms;
 using PIN.Core.jModels;
@@ -12,10 +14,9 @@ namespace PIN
         [STAThread]
         static void Main(string[] args)
         {
-            Translation.LoadDefault();
+            Arguments argumentsManager = new Arguments(args);
             Manager Manager = new Manager(new Arguments(args));
             new Notification(Manager);
-            Arguments argumentsManager = new Arguments(args);
 
             Console.SetWindowSize(Console.LargestWindowWidth - 50, Console.WindowHeight);
             Console.SetBufferSize(Console.LargestWindowWidth - 50, Console.WindowHeight);

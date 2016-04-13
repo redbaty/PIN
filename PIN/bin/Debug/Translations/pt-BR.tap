@@ -1,0 +1,8 @@
+﻿{
+    "InstallationProgressBarFormat": "{0} de {1} foram instalados. ({2}%)",
+    "InstallListLoaded": "Lista de instalação lida.",
+    "InstallationSuccess": "Sucesso !",
+    "InstallationPackageInvalid": "Pacotes inválidos : {0}",
+    "DownloadProgressBarFormat": "Baixando {0:F}MB de {1:F}MB. ({2}%)",
+    "GithubInformation": "Nos ajude no github : {0}"
+}
