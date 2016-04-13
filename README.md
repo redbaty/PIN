@@ -11,12 +11,12 @@ In 1.1.5.0 translation support were finally added. You can sumbit it on your lan
 
 ```json
 {
-    "InstallationProgressBarFormat": "{0} de {1} foram instalados. ({2}%)",
-    "InstallListLoaded": "Lista de instalação lida.",
-    "InstallationSuccess": "Sucesso !",
-    "InstallationPackageInvalid": "Pacotes inválidos : {0}",
-    "DownloadProgressBarFormat": "Baixando {0:F}MB de {1:F}MB. ({2}%)",
-    "GithubInformation": "Nos ajude no github : {0}"
+    "InstallationProgressBarFormat": "{0} of {1} were installed. ({2}%)",
+    "InstallListLoaded": "Installation list loaded.",
+    "InstallationSuccess": "Success !",
+    "InstallationPackageInvalid": "Invalid packages: {0}",
+    "DownloadProgressBarFormat": "Downloaded {0:F}MB of {1:F}MB. ({2}%)",
+    "GithubInformation": "Help us at github : {0}"
 }
 ```
 
