@@ -1,43 +1,35 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using Newtonsoft.Json;
+using System.Net;
+using System.Threading;
 using PIN.Core;
-using PIN.Core.Forms;
-using PIN.Core.jModels;
 using PIN.Core.Managers;
+using PIN.Core.Packages;
+using Squirrel;
+using static PIN.Core.Managers.Notification;
 
 namespace PIN
 {
     class Program
     {
-        [STAThread]
         static void Main(string[] args)
         {
-            Arguments argumentsManager = new Arguments(args);
-            Manager Manager = new Manager(new Arguments(args));
-            new Notification(Manager);
-
-            Console.SetWindowSize(Console.LargestWindowWidth - 50, Console.WindowHeight);
-            Console.SetBufferSize(Console.LargestWindowWidth - 50, Console.WindowHeight);
+            Language.FindTranslation("pt-BR");
             Utils.WriteVersion();
 
-            if (argumentsManager.Valueless.Contains("create"))
-                StartCreator();
-            
-            Manager.StartInstallation();
+            Arguments argumentsManager = new Arguments(args);
+            Manager manager = new Manager(argumentsManager);
+            NotificationStartListening(manager);
+            manager.StartInstallation();
 
             Console.ReadKey();
         }
 
-        static void StartCreator()
+        static async void Update()
         {
-            iCreator x = new iCreator();
-            x.Closed += delegate
+            using (var mgr = new UpdateManager("C:\\Projects\\MyApp\\Releases"))
             {
-                Process.GetCurrentProcess().Kill();
-            };
-            x.ShowDialog();
+                await mgr.UpdateApp();
+            }
         }
     }
 }

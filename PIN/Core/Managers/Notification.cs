@@ -1,45 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using PIN.Core.jModels;
+using static PIN.Core.Language;
 
 namespace PIN.Core.Managers
 {
     enum NotificationType
     {
-        INSTALLLOADED,
-        INSTALLATIONSUCCES,
-        INSTALLALTIONINVALID,
-        INSTALLATIONPROGRESS
+        Installloaded,
+        Installationsucces,
+        Installaltioninvalid,
+        Installationprogress,
+        Programdone
     }
 
-    class Notification
+    static class Notification
     {
-        private Manager Manager { get; set; }
-
-        public Notification(Manager manager)
+        public static void NotificationStartListening(Manager manager)
         {
             manager.ProgressChanged += ManagerOnProgressChanged;
         }
 
-        private void ManagerOnProgressChanged(List<string> list, NotificationType notificationType)
+        private static void ManagerOnProgressChanged(List<string> list, NotificationType notificationType)
         {
             switch (notificationType)
             {
-                case NotificationType.INSTALLALTIONINVALID:
+                case NotificationType.Installaltioninvalid:
                 {
-                    Utils.WriteError(string.Format(Translation.InstallationPackageInvalid, Utils.JoinArray(list.ToArray())));
+                    Utils.WriteError(string.Format(CurrentLanguage.InstallationPackageInvalid,
+                        Utils.JoinArray(list.ToArray())));
                 }
                     break;
-                case NotificationType.INSTALLATIONSUCCES:
-                    {
-                        Utils.WriteinColor(ConsoleColor.DarkGreen , string.Format(Translation.InstallationSuccess));
-                    }
+                case NotificationType.Installationsucces:
+                {
+                    Utils.WriteinColor(ConsoleColor.DarkGreen, string.Format(CurrentLanguage.InstallationSuccess));
+                }
                     break;
-                case NotificationType.INSTALLLOADED:
-                    {
-                        Utils.WriteInfo(string.Format(Translation.InstallListLoaded));
-                    }
+                case NotificationType.Installloaded:
+                {
+                    Utils.WriteInfo(string.Format(CurrentLanguage.InstallListLoaded));
+                }
                     break;
+                case NotificationType.Programdone:
+                {
+                    Utils.WriteInfo(CurrentLanguage.ProgramDone);
+                }
+                    break;
+                case NotificationType.Installationprogress:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(notificationType), notificationType, null);
             }
         }
     }

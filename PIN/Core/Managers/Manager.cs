@@ -1,69 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Konsole;
-using PIN.Core.jModels;
+using NLog;
 using PIN.Core.Packages;
+using ShellProgressBar;
+using static PIN.Core.Language;
+// ReSharper disable InconsistentNaming
+// ReSharper disable FieldCanBeMadeReadOnly.Local
 
 namespace PIN.Core.Managers
 {
     class Manager
     {
+        #region Lists
 
-        public List<IAP> IgnoredList { get; set; }
+        public List<IAP> IgnoredList { get; set; } = new List<IAP>();
         public List<IAP> InstallList { get; set; }
+        public List<IAP> InvalidPackages { get; set; }
 
-        public ProgressBar ProgressBar { get; set; }
+        #endregion
 
-        public string[] PackagesNames
-        {
-            get { return InstallList.Select(iap => iap.Packagename).ToArray(); }
-        }
+        private Logger NLogger = LogManager.GetCurrentClassLogger();
+        public ProgressBar ProgressBar { get; set; }       
+        private Arguments Arguments { get; }
+
 
         public event ManagerProgress ProgressChanged;
         internal delegate void ManagerProgress(List<string> data, NotificationType notificationType);
 
         public Manager(Arguments arguments)
         {
-            IgnoredList = new List<IAP>();
+            NLogger.Trace("New manager instantiated.");
 
-            InstallList = new Scanner().Scan();
-            InstallList = ValidateInstallations();
-            InstallList.Sort();
+            Arguments = arguments;
+            ValidateInstallations();
 
-            ProgressChanged += OnProgressChanged;
+            NLogger.Info($"Packages loaded. Valid [{InstallList.Count}] Ignored [{IgnoredList.Count}] Invalid [{InvalidPackages.Count}]");
 
-            if (arguments.Value.ContainsKey("ignore"))
+            if (InstallList.Count == 0)
             {
-                foreach (var packagename in arguments.Value.SelectMany(aa => aa.Value))
-                {
-                    if (IgnoredList != null) IgnoredList.Add(InstallList.Find(x => String.Equals(x.Packagename, packagename, StringComparison.CurrentCultureIgnoreCase)));
-                }
-                
-                InstallList = Utils.Remove(InstallList, IgnoredList);
+                Utils.WriteError(CurrentLanguage.InstallationNoPackageFound);
+                ProgressChanged?.Invoke(null, NotificationType.Programdone);
             }
         }
-
-        public void InvokeTest()
-        {
-            System.Diagnostics.Debug.Assert(ProgressChanged != null, "ProgressChanged != null");
-            ProgressChanged(null, NotificationType.INSTALLLOADED);
-        }
-
-        public void Debug()
-        {
-            Console.WriteLine("Installation List");
-            foreach (IAP iap in InstallList)
-            {
-                Utils.WriteinColor(ConsoleColor.Gray, iap.Packagename);
-            }
-
-            Console.WriteLine("\nIgnore List");
-            foreach (IAP iap in IgnoredList)
-            {
-                Utils.WriteinColor(ConsoleColor.Gray, iap.Packagename);
-            }
-        }      
 
         /// <summary>
         /// Starts all the installations.
@@ -71,37 +50,56 @@ namespace PIN.Core.Managers
         /// <param name="args">if set to <c>true</c> then the application will be executed with all the designed arguments.</param>
         public void StartInstallation(bool args = true)
         {
-            ProgressBar.FORMAT = Translation.InstallationProgressBarFormat;
-            ProgressBar = new ProgressBar(InstallList.Count - 1);
+            if(InstallList.Count == 0 || Arguments.Value.ContainsKey("update")) return;
 
-            for (int index = 0; index < InstallList.Count; index++)
+            ProgressBar = new ProgressBar(InstallList.Count, "", new ProgressBarOptions
             {
-                IAP iap = InstallList[index];
-                ProgressBar.Refresh(index, iap.Packagename);
-                if (ProgressChanged != null) ProgressChanged(new List<string> {iap.Packagename}, NotificationType.INSTALLATIONPROGRESS);
-                iap.Install(args);
-            }
+                ProgressBarOnBottom = true,
+                CollapseWhenFinished = true,
+                BackgroundColor = ConsoleColor.Gray,
+                ForeGroundColor = ConsoleColor.White
+            });
 
-            if (ProgressChanged != null) ProgressChanged(null, NotificationType.INSTALLATIONSUCCES);
+            foreach (IAP iap in InstallList)
+            {             
+                NLogger.Debug($"Beginning {iap.Packagename} installation.");
+
+                ProgressBar.UpdateMessage(string.Format(CurrentLanguage.InstallationProgress, iap.Packagename));
+                iap.Install(args);
+                ProgressBar.Tick();
+            }
         }
 
         /// <summary>
         /// Validates the installations.
         /// </summary>
         /// <returns></returns>
-        List<IAP> ValidateInstallations()
+        void ValidateInstallations()
         {
-            List<IAP> errors = InstallList.Where(iap => !iap.ValidateInstall()).ToList();
-            foreach (IAP error in errors) { InstallList.Remove(error); }
-            if (errors.Count > 0) { Utils.WriteError(string.Format("Pacotes invalidos : " + Utils.JoinArray(errors.Select(invalid => invalid.Packagename).ToArray()))); }
-            return InstallList;
-        }
+            InstallList = new Scanner().Scan();
+            foreach (IAP error in InstallList.Where(iap => !iap.ValidateInstall()).ToList()) InstallList.Remove(error);
 
-        protected virtual void OnProgressChanged(List<string> data, NotificationType notificationtype)
-        {
+            InvalidPackages = InstallList.Where(iap => !iap.ValidateInstall()).ToList();
 
+            foreach (IAP invalidPackage in InvalidPackages)        
+                NLogger.Debug($"{invalidPackage.Packagename} is invalid.");
+            
+
+            if (InvalidPackages.Count > 0) { ProgressChanged?.Invoke(InvalidPackages.Select(invalid => invalid.Packagename).ToList(), NotificationType.Installaltioninvalid); }
+
+
+            if (Arguments.Value.ContainsKey("ignore"))
+            {
+                foreach (var packagename in Arguments.Value.SelectMany(aa => aa.Value))
+                {
+                    IgnoredList?.Add(InstallList.Find(x => string.Equals(x.Packagename, packagename, StringComparison.CurrentCultureIgnoreCase)));
+                    NLogger.Debug($"{packagename} is ignored.");
+                }
+
+                InstallList = Utils.Remove(InstallList, IgnoredList);
+            }
+
+            InstallList.Sort();
         }
     }
-
-    
 }

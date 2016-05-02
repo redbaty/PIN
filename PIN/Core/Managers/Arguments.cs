@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-using PIN.Core.jModels;
+using PIN.Core.Packages;
 
 namespace PIN.Core.Managers
 {
@@ -24,9 +22,24 @@ namespace PIN.Core.Managers
 
             if (Value.ContainsKey("lg"))
             {
-                var x = Value["lg"];
-                var result = new Scanner().Find(x[0] + ".tap");
-                Translation.LoadTranslation(result[0]);
+                Language.FindTranslation(Value["lg"][0]);
+            }
+
+            if (Value.ContainsKey("install"))
+            {
+                foreach (string packageName in Value["install"])
+                {
+                    Chocolatey c = new Chocolatey(packageName);
+                    c.StartDownload();
+                }
+            }
+
+            if (Value.ContainsKey("update"))
+            {
+                foreach (var package in Value["update"].SelectMany(packagetoupdate => new Scanner().Scan().Where(package => package.Packagename == packagetoupdate)))
+                {
+                    package.Update(Valueless.Contains("forceupdate"));
+                }
             }
         }
 
@@ -36,13 +49,13 @@ namespace PIN.Core.Managers
             for (int index = 0; index < Valueless.Count; index++)
             {
                 string s = Valueless[index];
-                Utils.WriteinColor(ConsoleColor.Gray,string.Format("[{0}] {1}", index ,s));
+                Utils.WriteinColor(ConsoleColor.Gray, $"[{index}] {s}");
             }
 
             Console.WriteLine("\nArguments with value");
             foreach (var arg in Value)
             {
-                Utils.WriteinColor(ConsoleColor.Gray,string.Format("[{0}] {1}", arg.Key, Utils.JoinArray(arg.Value.ToArray())));
+                Utils.WriteinColor(ConsoleColor.Gray, $"[{arg.Key}] {Utils.JoinArray(arg.Value.ToArray())}");
             }
             Console.WriteLine("\n");
         }
@@ -51,7 +64,7 @@ namespace PIN.Core.Managers
         {
             string returnString = source.Replace("-", "");
             if (returnString.Contains("="))
-                returnString = returnString.Remove(returnString.IndexOf("="));
+                returnString = returnString.Remove(returnString.IndexOf("=", StringComparison.Ordinal));
             return returnString;
         }
 
@@ -63,5 +76,6 @@ namespace PIN.Core.Managers
                 returnString = returnString.Substring(returnString.IndexOf("=")+1);
             return returnString.Split(';').ToList();
         }
+
     }
 }

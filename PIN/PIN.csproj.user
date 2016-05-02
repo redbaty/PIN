@@ -12,6 +12,6 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-lg=pt-BR</StartArguments>
+    <StartArguments>-update=firefox%3bgooglechrome</StartArguments>
   </PropertyGroup>
 </Project>

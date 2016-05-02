@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Xml;
 using Newtonsoft.Json;
-using PIN.Core.jModels;
 using PIN.Core.Packages;
+using static PIN.Core.Language;
 
 namespace PIN.Core
 {
@@ -51,8 +52,8 @@ namespace PIN.Core
         public static void WriteVersion()
         {
             Version version = typeof (Program).Assembly.GetName().Version;
-            WriteinColor(ConsoleColor.Green, string.Format("PIN {0}", version));
-            WriteinColor(ConsoleColor.Gray, string.Format(Translation.GithubInformation, "https://github.com/redbaty/PIN/") + "\n");
+            WriteinColor(ConsoleColor.Green, $"PIN {version}");
+            WriteinColor(ConsoleColor.Gray, string.Format(CurrentLanguage.GithubInformation, "https://github.com/redbaty/PIN/") + "\n");
         }
 
         /// <summary>
@@ -124,18 +125,16 @@ namespace PIN.Core
 
         public static string FirstCharToUpper(string input)
         {
-            if (String.IsNullOrEmpty(input))
+            if (string.IsNullOrEmpty(input))
                 throw new ArgumentException("ARGH!");
             return input.First().ToString().ToUpper() + input.Substring(1);
         }
 
         public static string GetPowershellValue(string valuename, string source)
         {
-            source = source.Substring(source.IndexOf(valuename)).Split('\n')[0];
-            if (source.Contains("'"))
-                return source.Substring(source.IndexOf("'")).Replace("'", "");
-            else
-                return source.Substring(source.IndexOf("\"")).Replace("\"", "");
+            source = source.Substring(source.IndexOf(valuename, StringComparison.Ordinal)).Split('\n')[0];
+
+            return source.Contains("'") ? source.Substring(source.IndexOf("'", StringComparison.Ordinal)).Replace("'", "") : source.Substring(source.IndexOf("\"", StringComparison.Ordinal)).Replace("\"", "");
         }
 
         public static double ConvertBytesToMegabytes(long bytes)
@@ -143,40 +142,20 @@ namespace PIN.Core
             return (bytes / 1024f) / 1024f;
         }
 
-        static double ConvertMegabytesToGigabytes(double megabytes) // SMALLER
+        public static int GetDownloadSize(string url)
         {
-            // 1024 megabyte in a gigabyte
-            return megabytes / 1024.0;
-        }
+            WebRequest req = WebRequest.Create(url);
+            req.Method = "HEAD";
+            using (WebResponse resp = req.GetResponse())
+            {
+                int contentLength;
+                if (int.TryParse(resp.Headers.Get("Content-Length"), out contentLength))
+                {
+                    return contentLength;
+                }
+            }
 
-        static double ConvertMegabytesToTerabytes(double megabytes) // SMALLER
-        {
-            // 1024 * 1024 megabytes in a terabyte
-            return megabytes / (1024.0 * 1024.0);
-        }
-
-        static double ConvertGigabytesToMegabytes(double gigabytes) // BIGGER
-        {
-            // 1024 gigabytes in a terabyte
-            return gigabytes * 1024.0;
-        }
-
-        static double ConvertGigabytesToTerabytes(double gigabytes) // SMALLER
-        {
-            // 1024 gigabytes in a terabyte
-            return gigabytes / 1024.0;
-        }
-
-        static double ConvertTerabytesToMegabytes(double terabytes) // BIGGER
-        {
-            // 1024 * 1024 megabytes in a terabyte
-            return terabytes * (1024.0 * 1024.0);
-        }
-
-        static double ConvertTerabytesToGigabytes(double terabytes) // BIGGER
-        {
-            // 1024 gigabytes in a terabyte
-            return terabytes * 1024.0;
+            return -1;
         }
 
         public class Converter

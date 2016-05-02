@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using Ionic.Zip;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -117,7 +119,7 @@ namespace PIN.Core.Packages
         /// <returns></returns>
         public string Sumpath(string path, string add)
         {
-            return string.Format("{0}{1}", path, add);
+            return $"{path}{add}";
         }
 
         /// <summary>
@@ -161,5 +163,17 @@ namespace PIN.Core.Packages
 
             return InstallationIndex.CompareTo(comparePart.InstallationIndex);
         }
+
+        public void Update(bool force = false)
+        { 
+            ChocolateyInfo info = new ChocolateyInfo(Packagename);
+
+            if (info.Version > new Version(Version) || force)
+            {
+                Chocolatey c = new Chocolatey(Packagename);
+                c.StartDownload(BasePath);
+            }
+        }
+
     }
 }

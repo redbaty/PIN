@@ -9,21 +9,6 @@ C:\Users\marco\documents\visual studio 2013\Projects\PIN\PIN\bin\Debug\Newtonsof
 C:\Users\marco\Documents\Visual Studio 2013\Projects\PIN\PIN\bin\Debug\Ionic.Zip.dll
 C:\Users\marco\Documents\Visual Studio 2013\Projects\PIN\PIN\bin\Debug\Ionic.Zip.xml
 C:\Users\marco\Documents\Visual Studio 2013\Projects\PIN\PIN\bin\Debug\LinqBridge.dll
-C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.csproj.GenerateResource.Cache
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.exe.config
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.exe
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.pdb
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Ionic.Zip.dll
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\LinqBridge.dll
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Newtonsoft.Json.dll
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Ionic.Zip.xml
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Newtonsoft.Json.xml
-C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.csprojResolveAssemblyReference.cache
-C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.exe
-C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.pdb
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Konsole.dll
-C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Konsole.pdb
-C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.Core.Forms.iCreator.resources
 C:\Users\marco\Documents\GitHub\PIN2\PIN\bin\Debug\PIN.exe.config
 C:\Users\marco\Documents\GitHub\PIN2\PIN\obj\Debug\PIN.exe
 C:\Users\marco\Documents\GitHub\PIN2\PIN\obj\Debug\PIN.pdb
@@ -40,3 +25,27 @@ C:\Users\marco\Documents\GitHub\PIN2\PIN\obj\Debug\PIN.csprojResolveAssemblyRefe
 C:\Users\marco\Documents\GitHub\PIN2\PIN\obj\Debug\PIN.Core.Forms.iCreator.resources
 C:\Users\marco\Documents\GitHub\PIN2\PIN\obj\Debug\PIN.csproj.GenerateResource.Cache
 C:\Users\marco\Documents\GitHub\PIN2\PIN\bin\Debug\Translations\pt-BR.tap
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\NLog.config
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Translations\pt-BR.tap
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.exe.config
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.exe
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\PIN.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Ionic.Zip.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Newtonsoft.Json.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\NLog.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\NuGet.Squirrel.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\ShellProgressBar.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Splat.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Squirrel.dll
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\ICSharpCode.SharpZipLib.xml
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Ionic.Zip.xml
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Newtonsoft.Json.xml
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\NLog.xml
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\NuGet.Squirrel.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\ShellProgressBar.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Splat.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\bin\Debug\Squirrel.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.exe
+C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.pdb
+C:\Users\marco\Documents\GitHub\PIN\PIN\obj\Debug\PIN.csprojResolveAssemblyReference.cache
