@@ -27,8 +27,10 @@ Current supported args are
 
 ```
 -ignore=package1;package2... (ignore packages)
+-install=package1;package2... (download packages)
+-update[=package1;package2...] (if not specified update all packages)
+-noinstall (do not start any installation)
 -lg=language (type in the language to load without the extension)
--create (launch the windows form creation menu for installation files)
 ```
 
 # Installation File (.iap)
@@ -36,13 +38,14 @@ The installation file goes by the extension .iap and contains the instructions t
 
 ```json
 {
-  "Packagename": "7Zip",
-  "Version": "0",
-  "Url": "test",
-  "Arguments": "/S",
-  "Executable": "7z.exe",
-  "Executablex64": "7zx64.exe",
-  "InstallationIndex": 0
+  "Version": "50.0.2661.102",
+  "Packagename": "googlechrome",
+  "Arguments": "/quiet",
+  "Executable": "googlechrome.msi",
+  "Executablex64": "googlechrome64.msi",
+  "InstallationIndex": 0,
+  "ChocolateySupport": true,
+  "FileName": "googlechrome.iap"
 }
 ```
 
@@ -50,13 +53,11 @@ The installation file goes by the extension .iap and contains the instructions t
 
 - Packagename: The package name.
 - Version: The local version.
-- Url: The update package location. (Not implemented yet)
+- ChocolateySupport: Wheather or not this package can be updated through chocolatey repositories.
 - Arguments: The installation silent arguments.
 - Executable: The x86 installer name.
 - Executablex64: The x64 installer name.
 - InstallationIndex: The installation priority.
 
 # Roadmap
-- Add a installation file creator. **(Prototyped)**
-- Add full chocolatey package support. **(Prototyped)**
-- Add upate function.
+- Add a installation file creator.
