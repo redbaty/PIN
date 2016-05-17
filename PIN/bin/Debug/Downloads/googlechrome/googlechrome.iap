@@ -1,0 +1,10 @@
+{
+  "Version": "50.0.2661.102",
+  "Packagename": "googlechrome",
+  "Arguments": "/quiet",
+  "Executable": "googlechrome.msi",
+  "Executablex64": "googlechrome64.msi",
+  "InstallationIndex": 0,
+  "ChocolateySupport": true,
+  "FileName": "googlechrome.iap"
+}

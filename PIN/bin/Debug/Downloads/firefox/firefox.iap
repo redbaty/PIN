@@ -1,0 +1,10 @@
+{
+  "Version": "46.0.1",
+  "Packagename": "firefox",
+  "Arguments": "-ms",
+  "Executable": "firefox.exe",
+  "Executablex64": "firefox64.exe",
+  "InstallationIndex": 0,
+  "ChocolateySupport": true,
+  "FileName": "firefox.iap"
+}

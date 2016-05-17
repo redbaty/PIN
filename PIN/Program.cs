@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Net;
-using System.Threading;
 using PIN.Core;
 using PIN.Core.Managers;
-using PIN.Core.Packages;
 using Squirrel;
 using static PIN.Core.Managers.Notification;
 
@@ -19,8 +16,8 @@ namespace PIN
             Arguments argumentsManager = new Arguments(args);
             Manager manager = new Manager(argumentsManager);
             NotificationStartListening(manager);
-            manager.StartInstallation();
-
+            if(!argumentsManager.Valueless.Contains("noinstall")) manager.StartInstallation();
+            
             Console.ReadKey();
         }
 

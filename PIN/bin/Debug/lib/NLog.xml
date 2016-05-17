@@ -2038,6 +2038,11 @@
             Initializes a new instance of the <see cref="T:NLog.Config.LoggingConfiguration"/> class.
             </summary>
         </member>
+        <member name="F:NLog.Config.LoggingConfiguration.TargetNameComparer">
+            <summary>
+            Compare on name
+            </summary>
+        </member>
         <member name="M:NLog.Config.LoggingConfiguration.AddTarget(NLog.Targets.Target)">
             <summary>
             Registers the specified target object. The name of the target is read from <see cref="P:NLog.Targets.Target.Name"/>.
@@ -2230,6 +2235,11 @@
         <member name="P:NLog.Config.LoggingConfiguration.AllTargets">
             <summary>
             Gets all targets.
+            </summary>
+        </member>
+        <member name="T:NLog.Config.LoggingConfiguration.TargetNameEq">
+            <summary>
+            Compare on name
             </summary>
         </member>
         <member name="T:NLog.Config.LoggingConfigurationChangedEventArgs">
@@ -10642,6 +10652,32 @@
             </summary>
             <docgen category="Transformation Options" order="10"/>
         </member>
+        <member name="T:NLog.LayoutRenderers.Wrappers.WrapLineLayoutRendererWrapper">
+            <summary>
+            Replaces newline characters from the result of another layout renderer with spaces.
+            </summary>
+        </member>
+        <member name="M:NLog.LayoutRenderers.Wrappers.WrapLineLayoutRendererWrapper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.LayoutRenderers.Wrappers.WrapLineLayoutRendererWrapper"/> class.
+            </summary>
+        </member>
+        <member name="M:NLog.LayoutRenderers.Wrappers.WrapLineLayoutRendererWrapper.Transform(System.String)">
+            <summary>
+            Post-processes the rendered message. 
+            </summary>
+            <param name="text">The text to be post-processed.</param>
+            <returns>Post-processed text.</returns>
+        </member>
+        <member name="P:NLog.LayoutRenderers.Wrappers.WrapLineLayoutRendererWrapper.WrapLine">
+            <summary>
+            Gets or sets the line length for wrapping.
+            </summary>
+            <remarks>
+            Only positive values are allowed
+            </remarks>
+            <docgen category='Transformation Options' order='10' />
+        </member>
         <member name="T:NLog.LayoutRenderers.Wrappers.XmlEncodeLayoutRendererWrapper">
             <summary>
             Converts the result of another layout output to be XML-compliant.
@@ -17252,6 +17288,23 @@
             </summary>
             <docgen category='Layout Options' order='1' />
         </member>
+        <member name="M:NLog.Targets.AspResponseTarget.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.AspResponseTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.AspResponseTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.AspResponseTarget"/> class with a name.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="M:NLog.Targets.AspResponseTarget.Write(NLog.LogEventInfo)">
             <summary>
             Outputs the rendered logging event through the <c>OutputDebugString()</c> Win32 API.
@@ -17364,6 +17417,15 @@
             <remarks>
             The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
             </remarks>
+        </member>
+        <member name="M:NLog.Targets.NetworkTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.NetworkTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.NetworkTarget.FlushAsync(NLog.Common.AsyncContinuation)">
             <summary>
@@ -17481,6 +17543,15 @@
             The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
             </remarks>
         </member>
+        <member name="M:NLog.Targets.NLogViewerTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.NLogViewerTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="P:NLog.Targets.NLogViewerTarget.IncludeNLogData">
             <summary>
             Gets or sets a value indicating whether to include NLog-specific extensions to log4j schema.
@@ -17546,6 +17617,12 @@
             Initializes a new instance of the <see cref="T:NLog.Targets.ChainsawTarget"/> class.
             </summary>
         </member>
+        <member name="M:NLog.Targets.ChainsawTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.ChainsawTarget"/> class with a name.
+            </summary>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="T:NLog.Targets.ColoredConsoleTarget">
             <summary>
             Writes log messages to the console with customizable coloring.
@@ -17596,6 +17673,15 @@
             <remarks>
             The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
             </remarks>
+        </member>
+        <member name="M:NLog.Targets.ColoredConsoleTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.ColoredConsoleTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.ColoredConsoleTarget.InitializeTarget">
             <summary>
@@ -17862,6 +17948,23 @@
             <code lang="C#" source="examples/targets/Configuration API/Console/Simple/Example.cs" />
             </example>
         </member>
+        <member name="M:NLog.Targets.ConsoleTarget.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.ConsoleTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.ConsoleTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.ConsoleTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="M:NLog.Targets.ConsoleTarget.InitializeTarget">
             <summary>
             Initializes the target.
@@ -18099,6 +18202,12 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.DatabaseTarget"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.DatabaseTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.DatabaseTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.DatabaseTarget.Install(NLog.Config.InstallationContext)">
             <summary>
@@ -18345,6 +18454,23 @@
             <code lang="C#" source="examples/targets/Configuration API/Debugger/Simple/Example.cs" />
             </example>
         </member>
+        <member name="M:NLog.Targets.DebuggerTarget.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.DebuggerTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.DebuggerTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.DebuggerTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="M:NLog.Targets.DebuggerTarget.InitializeTarget">
             <summary>
             Initializes the target.
@@ -18389,6 +18515,15 @@
             <remarks>
             The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
             </remarks>
+        </member>
+        <member name="M:NLog.Targets.DebugTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.DebugTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.DebugTarget.Write(NLog.LogEventInfo)">
             <summary>
@@ -18438,6 +18573,12 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.EventLogTarget"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.EventLogTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.EventLogTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.EventLogTarget.Install(NLog.Config.InstallationContext)">
             <summary>
@@ -18704,6 +18845,15 @@
             <remarks>
             The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
             </remarks>
+        </member>
+        <member name="M:NLog.Targets.FileTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.FileTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.FileTarget.RefreshArchiveFilePatternToWatch">
             <summary>
@@ -19034,13 +19184,14 @@
             <param name="fileName">File name to be written.</param>
             <param name="logEvent">Log event that the <see cref="T:NLog.Targets.FileTarget"/> instance is currently processing.</param>
         </member>
-        <member name="M:NLog.Targets.FileTarget.ReplaceFileContent(System.String,System.Byte[])">
+        <member name="M:NLog.Targets.FileTarget.ReplaceFileContent(System.String,System.Byte[],System.Boolean)">
             <summary>
             Creates the file specified in <paramref name="fileName"/> and writes the file content in each entirety i.e.
             Header, Content and Footer.
             </summary>
             <param name="fileName">The name of the file to be written.</param>
             <param name="bytes">Sequence of <see langword="byte"/> to be written in the content section of the file.</param>
+            <param name="firstAttempt">First attempt to write?</param>
             <remarks>This method is used when the content of the log file is re-written on every write.</remarks>
         </member>
         <member name="M:NLog.Targets.FileTarget.WriteHeader(NLog.Internal.FileAppenders.BaseFileAppender)">
@@ -19321,6 +19472,14 @@
             </summary>
             <docgen category='Archival Options' order='10' />
         </member>
+        <member name="P:NLog.Targets.FileTarget.FileCompressor">
+            <summary>
+            Used to compress log files during archiving.
+            This may be used to provide your own implementation of a zip file compressor,
+            on platforms other than .Net4.5.
+            Defaults to ZipArchiveFileCompressor on .Net4.5 and to null otherwise.
+            </summary>
+        </member>
         <member name="P:NLog.Targets.FileTarget.EnableArchiveFileCompression">
             <summary>
             Gets or sets a value indicating whether to compress archive files into the zip archive format.
@@ -19425,6 +19584,19 @@
             within the <see cref="P:FileNameTemplate.Template"/>. -1 is returned 
             when no pattern can be found.
             </summary>
+        </member>
+        <member name="T:NLog.Targets.IFileCompressor">
+            <summary>
+            <see cref="T:NLog.Targets.FileTarget"/> may be configured to compress archived files in a custom way
+            by setting <see cref="P:NLog.Targets.FileTarget.FileCompressor"/> before logging your first event.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.IFileCompressor.CompressFile(System.String,System.String)">
+            <summary>
+            Create archiveFileName by compressing fileName.
+            </summary>
+            <param name="fileName">Absolute path to the log file to compress.</param>
+            <param name="archiveFileName">Absolute path to the compressed archive file to create.</param>
         </member>
         <member name="T:NLog.Targets.LineEndingMode">
             <summary>
@@ -19566,6 +19738,12 @@
             Initializes a new instance of the <see cref="T:NLog.Targets.LogReceiverWebServiceTarget"/> class.
             </summary>
         </member>
+        <member name="M:NLog.Targets.LogReceiverWebServiceTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.LogReceiverWebServiceTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="M:NLog.Targets.LogReceiverWebServiceTarget.OnSend(NLog.LogReceiverService.NLogEvents,System.Collections.Generic.IEnumerable{NLog.Common.AsyncLogEventInfo})">
             <summary>
             Called when log events are being sent (test hook).
@@ -19701,6 +19879,15 @@
             <remarks>
             The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
             </remarks>
+        </member>
+        <member name="M:NLog.Targets.MailTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.MailTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.MailTarget.Write(NLog.Common.AsyncLogEventInfo)">
             <summary>
@@ -19942,6 +20129,15 @@
             The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
             </remarks>
         </member>
+        <member name="M:NLog.Targets.MemoryTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.MemoryTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="M:NLog.Targets.MemoryTarget.Write(NLog.LogEventInfo)">
             <summary>
             Renders the logging event message and adds it to the internal ArrayList of log messages.
@@ -20061,6 +20257,17 @@
             </summary>
             <docgen category='Parameter Options' order='10' />
         </member>
+        <member name="M:NLog.Targets.MethodCallTarget.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.MethodCallTarget"/> class.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.MethodCallTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.MethodCallTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="M:NLog.Targets.MethodCallTarget.InitializeTarget">
             <summary>
             Initializes the target.
@@ -20170,6 +20377,23 @@
             <code lang="C#" source="examples/targets/Configuration API/Null/Simple/Example.cs" />
             </example>
         </member>
+        <member name="M:NLog.Targets.NullTarget.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.NullTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.NullTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.NullTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name"></param>
+        </member>
         <member name="M:NLog.Targets.NullTarget.Write(NLog.LogEventInfo)">
             <summary>
             Does nothing. Optionally it calculates the layout text but
@@ -20203,6 +20427,23 @@
             </p>
             <code lang="C#" source="examples/targets/Configuration API/OutputDebugString/Simple/Example.cs" />
             </example>
+        </member>
+        <member name="M:NLog.Targets.OutputDebugStringTarget.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.OutputDebugStringTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.OutputDebugStringTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.OutputDebugStringTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.OutputDebugStringTarget.Write(NLog.LogEventInfo)">
             <summary>
@@ -20242,6 +20483,12 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.PerformanceCounterTarget"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.PerformanceCounterTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.PerformanceCounterTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
         </member>
         <member name="M:NLog.Targets.PerformanceCounterTarget.Install(NLog.Config.InstallationContext)">
             <summary>
@@ -20386,6 +20633,23 @@
             <code lang="C#" source="examples/targets/Configuration API/Trace/Simple/Example.cs" />
             </example>
         </member>
+        <member name="M:NLog.Targets.TraceTarget.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.TraceTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+        </member>
+        <member name="M:NLog.Targets.TraceTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.TraceTarget"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="name">Name of the target.</param>
+        </member>
         <member name="M:NLog.Targets.TraceTarget.Write(NLog.LogEventInfo)">
             <summary>
             Writes the specified logging event to the <see cref="T:System.Diagnostics.Trace"/> facility.
@@ -20450,6 +20714,12 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.WebServiceTarget"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.WebServiceTarget.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.WebServiceTarget"/> class.
+            </summary>
+            <param name="name">Name of the target</param>
         </member>
         <member name="M:NLog.Targets.WebServiceTarget.DoInvoke(System.Object[])">
             <summary>
@@ -20736,6 +21006,13 @@
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.AsyncTargetWrapper"/> class.
             </summary>
         </member>
+        <member name="M:NLog.Targets.Wrappers.AsyncTargetWrapper.#ctor(System.String,NLog.Targets.Target)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.AsyncTargetWrapper"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="wrappedTarget">The wrapped target.</param>
+        </member>
         <member name="M:NLog.Targets.Wrappers.AsyncTargetWrapper.#ctor(NLog.Targets.Target)">
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.AsyncTargetWrapper"/> class.
@@ -20865,6 +21142,16 @@
             The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
             </remarks>
         </member>
+        <member name="M:NLog.Targets.Wrappers.AutoFlushTargetWrapper.#ctor(System.String,NLog.Targets.Target)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.AutoFlushTargetWrapper"/> class.
+            </summary>
+            <remarks>
+            The default value of the layout is: <code>${longdate}|${level:uppercase=true}|${logger}|${message}</code>
+            </remarks>
+            <param name="wrappedTarget">The wrapped target.</param>
+            <param name="name">Name of the target</param>
+        </member>
         <member name="M:NLog.Targets.Wrappers.AutoFlushTargetWrapper.#ctor(NLog.Targets.Target)">
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.AutoFlushTargetWrapper"/> class.
@@ -20888,6 +21175,13 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.BufferingTargetWrapper"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.Wrappers.BufferingTargetWrapper.#ctor(System.String,NLog.Targets.Target)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.BufferingTargetWrapper"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="wrappedTarget">The wrapped target.</param>
         </member>
         <member name="M:NLog.Targets.Wrappers.BufferingTargetWrapper.#ctor(NLog.Targets.Target)">
             <summary>
@@ -21017,6 +21311,13 @@
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.FallbackGroupTarget"/> class.
             </summary>
         </member>
+        <member name="M:NLog.Targets.Wrappers.FallbackGroupTarget.#ctor(System.String,NLog.Targets.Target[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.FallbackGroupTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="targets">The targets.</param>
+        </member>
         <member name="M:NLog.Targets.Wrappers.FallbackGroupTarget.#ctor(NLog.Targets.Target[])">
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.FallbackGroupTarget"/> class.
@@ -21095,6 +21396,14 @@
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.FilteringTargetWrapper"/> class.
             </summary>
         </member>
+        <member name="M:NLog.Targets.Wrappers.FilteringTargetWrapper.#ctor(System.String,NLog.Targets.Target,NLog.Conditions.ConditionExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.FilteringTargetWrapper"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="wrappedTarget">The wrapped target.</param>
+            <param name="condition">The condition.</param>
+        </member>
         <member name="M:NLog.Targets.Wrappers.FilteringTargetWrapper.#ctor(NLog.Targets.Target,NLog.Conditions.ConditionExpression)">
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.FilteringTargetWrapper"/> class.
@@ -21127,6 +21436,13 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.ImpersonatingTargetWrapper"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.Wrappers.ImpersonatingTargetWrapper.#ctor(System.String,NLog.Targets.Target)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.ImpersonatingTargetWrapper"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="wrappedTarget">The wrapped target.</param>
         </member>
         <member name="M:NLog.Targets.Wrappers.ImpersonatingTargetWrapper.#ctor(NLog.Targets.Target)">
             <summary>
@@ -21272,6 +21588,18 @@
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.PostFilteringTargetWrapper"/> class.
             </summary>
         </member>
+        <member name="M:NLog.Targets.Wrappers.PostFilteringTargetWrapper.#ctor(NLog.Targets.Target)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.PostFilteringTargetWrapper"/> class.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.Wrappers.PostFilteringTargetWrapper.#ctor(System.String,NLog.Targets.Target)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.PostFilteringTargetWrapper"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="wrappedTarget">The wrapped target.</param>
+        </member>
         <member name="M:NLog.Targets.Wrappers.PostFilteringTargetWrapper.Write(NLog.Common.AsyncLogEventInfo[])">
             <summary>
             Evaluates all filtering rules to find the first one that matches.
@@ -21321,6 +21649,13 @@
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RandomizeGroupTarget"/> class.
             </summary>
         </member>
+        <member name="M:NLog.Targets.Wrappers.RandomizeGroupTarget.#ctor(System.String,NLog.Targets.Target[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RandomizeGroupTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="targets">The targets.</param>
+        </member>
         <member name="M:NLog.Targets.Wrappers.RandomizeGroupTarget.#ctor(NLog.Targets.Target[])">
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RandomizeGroupTarget"/> class.
@@ -21357,6 +21692,14 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RepeatingTargetWrapper"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.Wrappers.RepeatingTargetWrapper.#ctor(System.String,NLog.Targets.Target,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RepeatingTargetWrapper"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="wrappedTarget">The wrapped target.</param>
+            <param name="repeatCount">The repeat count.</param>
         </member>
         <member name="M:NLog.Targets.Wrappers.RepeatingTargetWrapper.#ctor(NLog.Targets.Target,System.Int32)">
             <summary>
@@ -21401,6 +21744,15 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RetryingTargetWrapper"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.Wrappers.RetryingTargetWrapper.#ctor(System.String,NLog.Targets.Target,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RetryingTargetWrapper"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="wrappedTarget">The wrapped target.</param>
+            <param name="retryCount">The retry count.</param>
+            <param name="retryDelayMilliseconds">The retry delay milliseconds.</param>
         </member>
         <member name="M:NLog.Targets.Wrappers.RetryingTargetWrapper.#ctor(NLog.Targets.Target,System.Int32,System.Int32)">
             <summary>
@@ -21453,6 +21805,13 @@
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RoundRobinGroupTarget"/> class.
             </summary>
+        </member>
+        <member name="M:NLog.Targets.Wrappers.RoundRobinGroupTarget.#ctor(System.String,NLog.Targets.Target[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.RoundRobinGroupTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="targets">The targets.</param>
         </member>
         <member name="M:NLog.Targets.Wrappers.RoundRobinGroupTarget.#ctor(NLog.Targets.Target[])">
             <summary>
@@ -21592,6 +21951,13 @@
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.SplitGroupTarget"/> class.
             </summary>
         </member>
+        <member name="M:NLog.Targets.Wrappers.SplitGroupTarget.#ctor(System.String,NLog.Targets.Target[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.SplitGroupTarget"/> class.
+            </summary>
+            <param name="name">Name of the target.</param>
+            <param name="targets">The targets.</param>
+        </member>
         <member name="M:NLog.Targets.Wrappers.SplitGroupTarget.#ctor(NLog.Targets.Target[])">
             <summary>
             Initializes a new instance of the <see cref="T:NLog.Targets.Wrappers.SplitGroupTarget"/> class.
@@ -21611,6 +21977,19 @@
             optimize batch writes.
             </summary>
             <param name="logEvents">Logging events to be written out.</param>
+        </member>
+        <member name="T:NLog.Targets.ZipArchiveFileCompressor">
+            <summary>
+            Builtin IFileCompressor implementation utilizing the .Net4.5 specific <see cref="T:System.IO.Compression.ZipArchive"/> 
+            and is used as the default value for <see cref="P:NLog.Targets.FileTarget.FileCompressor"/> on .Net4.5.
+            So log files created via <see cref="T:NLog.Targets.FileTarget"/> can be zipped when archived
+            w/o 3rd party zip library when run on .Net4.5 or higher.
+            </summary>
+        </member>
+        <member name="M:NLog.Targets.ZipArchiveFileCompressor.CompressFile(System.String,System.String)">
+            <summary>
+            Implements <see cref="M:NLog.Targets.IFileCompressor.CompressFile(System.String,System.String)"/> using the .Net4.5 specific <see cref="T:System.IO.Compression.ZipArchive"/>
+            </summary>
         </member>
         <member name="T:NLog.Time.AccurateLocalTimeSource">
             <summary>

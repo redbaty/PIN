@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
-using Ionic.Zip;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using PIN.Core.Managers;
 
 namespace PIN.Core.Packages
 {
@@ -13,14 +12,17 @@ namespace PIN.Core.Packages
         [JsonIgnore]
         public string BasePath { get; set; }
 
-
-        public string Packagename { get; set; }
         public string Version { get; set; }
-        public string Url { get; set; }
+
+        public string Packagename { get; set; }     
         public string Arguments { get; set; }
         public string Executable { get; set; }
         public string Executablex64 { get; set; }     
+
         public int InstallationIndex { get; set; }
+        public bool ChocolateySupport { get; set; }
+
+        public string FileName { get; set; }
 
         public IAP()
         {
@@ -38,12 +40,13 @@ namespace PIN.Core.Packages
                 IAP x = JsonConvert.DeserializeObject<IAP>(File.ReadAllText(path));
                 Packagename = x.Packagename;
                 Version = x.Version;
-                Url = x.Url;
+                ChocolateySupport = x.ChocolateySupport;
                 Arguments = x.Arguments;
                 BasePath = Path.GetDirectoryName(path) + @"\";
                 Executable = x.Executable;
                 Executablex64 = x.Executablex64;
                 InstallationIndex = x.InstallationIndex;
+                FileName = Path.GetFileName(path);
 
                 Save(path);
             }
@@ -54,17 +57,17 @@ namespace PIN.Core.Packages
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="version">The local version.</param>
-        /// <param name="url">The update/chocolatey URL.</param>
+        /// <param name="supportChocolatey">The package support chocolatey updates/installation.</param>
         /// <param name="arguments">The arguments.</param>
         /// <param name="exec">The executable path.</param>
         /// <param name="execx64">The x64 executable path.</param>
         /// <param name="iIndex">Installation priority.</param>
         /// <param name="bPath">The base path.</param>
-        public IAP(string name, string version, string url, string arguments, string exec, string execx64, int iIndex, string bPath)
+        public IAP(string name, string version, bool supportChocolatey, string arguments, string exec, string execx64, int iIndex, string bPath)
         {
             Packagename = name;
             Version = version;
-            Url = url;
+            ChocolateySupport = supportChocolatey;
             Arguments = arguments;
             BasePath = bPath;
             Executable = exec;
@@ -87,9 +90,9 @@ namespace PIN.Core.Packages
                 if (useArguments)
                     installationProcess = Utils.InternalCheckIsWow64() ? Process.Start(inst64, Arguments) : Process.Start(inst32, Arguments);     
                 else              
-                    installationProcess = Utils.InternalCheckIsWow64() ? Process.Start(inst64) : Process.Start(inst32);            
-                
-                if (installationProcess != null) installationProcess.WaitForExit();
+                    installationProcess = Utils.InternalCheckIsWow64() ? Process.Start(inst64) : Process.Start(inst32);
+
+                installationProcess?.WaitForExit();
             }
             catch (Exception)
             {
@@ -112,7 +115,7 @@ namespace PIN.Core.Packages
         }
 
         /// <summary>
-        /// Sums two paths.
+        /// Sums two Path.
         /// </summary>
         /// <param name="path">The base path.</param>
         /// <param name="add">The path to sum.</param>
@@ -135,7 +138,7 @@ namespace PIN.Core.Packages
 
             using (StreamWriter sw = new StreamWriter(path))
             using (JsonWriter writer = new JsonTextWriter(sw))
-            {            
+            {
                 serializer.Serialize(writer, this);
             }
         }
@@ -164,16 +167,26 @@ namespace PIN.Core.Packages
             return InstallationIndex.CompareTo(comparePart.InstallationIndex);
         }
 
-        public void Update(bool force = false)
+        public void Update()
         { 
-            ChocolateyInfo info = new ChocolateyInfo(Packagename);
-
-            if (info.Version > new Version(Version) || force)
+            var info = new ChocolateyInfo(Packagename);
+           
+            if (info.Version > new Version(Version))
             {
-                Chocolatey c = new Chocolatey(Packagename);
-                c.StartDownload(BasePath);
-            }
-        }
+                if (!string.IsNullOrEmpty(info.Powershell.URL86))
+                    Download.StartDownload(info.Powershell.URL86, $"{BasePath}{Executable}", Packagename);
 
+                if (!string.IsNullOrEmpty(info.Powershell.URL64))
+                    Download.StartDownload(info.Powershell.URL64, $"{BasePath}{Executablex64}", $"{Packagename} x64");
+
+                Version = info.Version.ToString();
+                Save(BasePath + FileName);
+
+                Utils.WriteInfo($"{Packagename} update");
+            }
+            else
+                Utils.WriteInfo($"{Packagename} does not need updates");
+            
+        }
     }
 }

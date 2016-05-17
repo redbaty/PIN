@@ -11,55 +11,17 @@ namespace PIN.Core.Packages
     class ChocolateyInfo
     {
         public PackageInformation Package { get; set; }
-
-        public string FileType { get; set; }
-        private string PackageName { get; set; }
         public PowerShell Powershell { get; set; }
         public Version Version { get; set; }
-        public Paths paths { get; set; }
+        public Paths Path { get; set; }
 
-        internal class PowerShell
-        {
-            public string URL86 { get; set; }
-            public string URL64 { get; set; }
-            public string FileType { get; set; }
-            private string Source { get; }
-            public string Argument { get; set; }
-
-            public PowerShell(string source, Version version)
-            {
-                Source = source;
-
-                if (!source.Contains("$fileType") && source.Contains("msi"))
-                    FileType = "msi";
-
-                if (source.Contains("$fileType"))          
-                    FileType = Utils.GetPowershellValue("$fileType", Source);
-                
-
-                if (Source.Contains("$silentArgs"))
-                    Argument = Utils.GetPowershellValue("$silentArgs", Source).Replace("\r", "");
-                if (Source.Contains("$url"))
-                    URL86 = GetUrl86(Source, version).Replace("https", "http");
-                if (Source.Contains("$url64"))
-                    URL64 = GetUrl64(Source, version).Replace("https", "http");
-
-            }
-
-            private string GetUrl86(string source, Version newestversion)
-            {
-                return Utils.GetPowershellValue("$url", source).Replace("${version}", newestversion.ToString()).Replace("${locale}", "pt-BR");
-            }
-
-            private string GetUrl64(string source, Version newestversion)
-            {
-                return Utils.GetPowershellValue("$url64", source).Replace("${version}", newestversion.ToString()).Replace("${locale}", "pt-BR");
-            }
-        }
+        public string FileType { get; set; }
+        public string PowershellContent { get; set; }
+        public string PackageFileContent { get; set; }
 
         public ChocolateyInfo(string packageName)
         {
-            paths = new Paths
+            Path = new Paths
             {
                 PowerShellFile = @"tools\chocolateyInstall.ps1",
                 CompressedFile = $"{packageName}.upackage",
@@ -68,36 +30,55 @@ namespace PIN.Core.Packages
 
             DownloadBasicPackage(packageName);
 
-            PackageName = packageName;        
-            Package = JsonConvert.DeserializeObject<PackageInformation>(Utils.Converter.XmlToJson(File.ReadAllText(packageName + ".nuspec")).Replace("-xmlns", "xmlns"));
+            Package = JsonConvert.DeserializeObject<PackageInformation>(PackageFileContent);
             Version = new Version(Package.package.metadata.version);
-            Powershell = new PowerShell(File.ReadAllText(@"tools\chocolateyInstall.ps1"), Version);
+            Powershell = new PowerShell(PowershellContent, Version);
+            FileType = Powershell.FileType;
 
-            File.Delete(@"tools\chocolateyInstall.ps1");
-            File.Delete(paths.CompressedFile);
-            File.Delete(paths.PackageFile);
-            if (Directory.Exists("tools")) Directory.Delete("tools");
-
-            if (!Directory.Exists("Downloads")) Directory.CreateDirectory("Downloads");
+            File.Delete(Path.CompressedFile);
         }
 
         public void DownloadBasicPackage(string pap)
         {
-            Paths cPaths = paths;
+            #region Download file
 
-            var webHandler = new WebClient();
-            webHandler.DownloadFile($"http://chocolatey.org/api/v2/package/{pap}/", cPaths.CompressedFile);
+            try
+            {
+                new WebClient().DownloadFile($"http://chocolatey.org/api/v2/package/{pap}/", Path.CompressedFile);
+            }
+            catch (WebException x)
+            {
+                if (x.Status == WebExceptionStatus.ProtocolError)
+                {
+                    throw new Exception(
+                        "Can't find the package on chocolatey servers. ( Make sure the packaname is exacly the same as in the website )");
+                }
 
-            using (StreamReader outputStream = new StreamReader(cPaths.CompressedFile))
+                throw new Exception($"Error while downloading {pap} - {x} @ ChocolateyInfo");
+            }
+
+            #endregion
+            #region Read the files
+
+            using (StreamReader outputStream = new StreamReader(Path.CompressedFile))
             {
                 using (ZipFile zip = ZipFile.Read(outputStream.BaseStream))
                 {
-                    ZipEntry e = zip[cPaths.PackageFile];
-                    e.Extract(ExtractExistingFileAction.OverwriteSilently);
-                    e = zip[cPaths.PowerShellFile];
-                    e.Extract(ExtractExistingFileAction.OverwriteSilently);
+                    ZipEntry e = zip[Path.PackageFile];
+                    using (StreamReader s = new StreamReader(e.OpenReader()))
+                    {
+                        PackageFileContent = Utils.Converter.XmlToJson(s.ReadToEnd().Replace("-xmlns", "xmlns"));
+                    }
+
+                    e = zip[Path.PowerShellFile];
+                    using (StreamReader s = new StreamReader(e.OpenReader()))
+                    {
+                        PowershellContent = s.ReadToEnd();
+                    }
                 }
             }
+
+            #endregion
         }
     }
 }

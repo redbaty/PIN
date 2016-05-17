@@ -38,7 +38,25 @@ namespace PIN.Core.Managers
             {
                 foreach (var package in Value["update"].SelectMany(packagetoupdate => new Scanner().Scan().Where(package => package.Packagename == packagetoupdate)))
                 {
-                    package.Update(Valueless.Contains("forceupdate"));
+                    package.Update();
+                }
+            }
+
+            if (Valueless.Contains("update"))
+            {
+                Utils.WriteInfo("Scanning packages for updates");
+
+                foreach (IAP iap in new Scanner().Scan())
+                    iap.Update();
+
+                Utils.WriteInfo("All packages are up-to-date");
+            }
+
+            if (Value.ContainsKey("install"))
+            {
+                foreach (Chocolatey choco in Value["install"].Select(toInstall => new Chocolatey(toInstall)))
+                {
+                    choco.StartDownload();
                 }
             }
         }
@@ -73,7 +91,7 @@ namespace PIN.Core.Managers
         {
             string returnString = source;
             if (returnString.Contains("="))
-                returnString = returnString.Substring(returnString.IndexOf("=")+1);
+                returnString = returnString.Substring(returnString.IndexOf("=", StringComparison.Ordinal)+1);
             return returnString.Split(';').ToList();
         }
 

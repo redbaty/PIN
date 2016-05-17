@@ -1,0 +1,37 @@
+[05-16 21:29:11 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
+[05-16 21:47:11 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
+[05-16 22:05:44 @ PIN.Core.Packages.Chocolatey] googlechrome failed to download. System.Net.WebException: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetResponse()
+   em PIN.Core.Utils.GetDownloadSize(String url)
+   em PIN.Core.Managers.Download.StartDownload(String url, String path, String packagename)
+   em PIN.Core.Packages.Chocolatey.StartDownload(String path)
+[05-16 22:05:47 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
+[05-16 22:19:08 @ PIN.Core.Packages.Chocolatey] googlechrome failed to download. System.Net.WebException: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetResponse()
+   em PIN.Core.Utils.GetDownloadSize(String url)
+   em PIN.Core.Managers.Download.StartDownload(String url, String path, String packagename)
+   em PIN.Core.Packages.Chocolatey.StartDownload(String path)
+[05-16 22:19:12 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
+[05-16 22:50:29 @ PIN.Core.Packages.Chocolatey] googlechrome failed to download. System.Net.WebException: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetResponse()
+   em PIN.Core.Utils.GetDownloadSize(String url)
+   em PIN.Core.Managers.Download.StartDownload(String url, String path, String packagename)
+   em PIN.Core.Packages.Chocolatey.StartDownload(String path)
+[05-16 22:50:43 @ PIN.Core.Packages.Chocolatey] firefox failed to download. System.Net.WebException: O nome remoto não pôde ser resolvido: 'download.mozilla.org'
+   em System.Net.HttpWebRequest.GetResponse()
+   em PIN.Core.Utils.GetDownloadSize(String url)
+   em PIN.Core.Managers.Download.StartDownload(String url, String path, String packagename)
+   em PIN.Core.Packages.Chocolatey.StartDownload(String path)
+[05-16 22:50:44 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
+[05-16 22:51:05 @ PIN.Core.Managers.Download] Sucessfully downloaded Firefox
+[05-16 22:51:33 @ PIN.Core.Managers.Download] Sucessfully downloaded Googlechrome
+[05-16 22:51:43 @ PIN.Core.Managers.Download] Sucessfully downloaded Googlechrome x64
+[05-16 22:51:48 @ PIN.Core.Managers.Download] Sucessfully downloaded Firefox x64
+[05-16 22:53:33 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
+[05-16 22:54:13 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
+[05-16 22:55:42 @ PIN.Core.Managers.Download] Sucessfully downloaded Firefox x64
+[05-16 22:55:43 @ PIN.Core.Managers.Download] Sucessfully downloaded Firefox
+[05-16 23:11:30 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
+[05-16 23:12:54 @ PIN.Core.Managers.Download] Sucessfully downloaded Firefox
+[05-16 23:13:05 @ PIN.Core.Managers.Download] Sucessfully downloaded Firefox x64
+[05-16 23:14:01 @ PIN.Core.Managers.Manager] Packages loaded. Valid [2] Ignored [0] Invalid [0]
