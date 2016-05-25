@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using CommandLineParser.Arguments;
 using NLog;
 using PIN.Core.Packages;
 using ShellProgressBar;
@@ -22,18 +24,41 @@ namespace PIN.Core.Managers
 
         private Logger NLogger = LogManager.GetCurrentClassLogger();
         public ProgressBar ProgressBar { get; set; }       
-        private Arguments Arguments { get; }
 
 
         public event ManagerProgress ProgressChanged;
         internal delegate void ManagerProgress(List<string> data, NotificationType notificationType);
 
-        public Manager(Arguments arguments)
+        public Manager(string[] arguments)
         {
-            NLogger.Trace("New manager instantiated.");
+            #region Arguments Parsing
 
-            Arguments = arguments;
-            ValidateInstallations();
+            var parser = new CommandLineParser.CommandLineParser();
+
+            var helpArgument = new SwitchArgument('h', "help", "Show these commands", false);
+            var exampleArgument = new SwitchArgument('e', "example", "Create a package example", false);
+            var languageArgument = new ValueArgument<string>('l', "language", "Set the program language");
+            var noInstallArgument = new SwitchArgument('n', "noinstall", "Don't install any packages.", false);
+            var updateArgument = new SwitchArgument('u', "update", "Update all pin packages.", false);
+            var ignoreArgument = new ValueArgument<string>('i', "ignore", "Ignore the named packages");
+            var downloadArgument = new ValueArgument<string>('d', "download", "Download packages from chocolatey.");
+
+            parser.Arguments.Add(helpArgument);
+            parser.Arguments.Add(noInstallArgument);
+            parser.Arguments.Add(downloadArgument);
+            parser.Arguments.Add(updateArgument);
+            parser.Arguments.Add(ignoreArgument);
+            parser.Arguments.Add(languageArgument);
+            parser.Arguments.Add(exampleArgument);
+
+            parser.ParseCommandLine(arguments);
+
+            FindTranslation(languageArgument.Value);
+            Utils.WriteVersion();
+
+            #endregion
+
+            ValidateInstallations(ignoreArgument);
 
             NLogger.Info($"Packages loaded. Valid [{InstallList.Count}] Ignored [{IgnoredList.Count}] Invalid [{InvalidPackages.Count}]");
 
@@ -41,7 +66,14 @@ namespace PIN.Core.Managers
             {
                 Utils.WriteError(CurrentLanguage.InstallationNoPackageFound);
                 ProgressChanged?.Invoke(null, NotificationType.Programdone);
+                return;
             }
+
+            if (helpArgument.Value) parser.ShowUsage();
+            if (exampleArgument.Value) IAP.Example($"{Directory.GetCurrentDirectory()}\\Packages\\Example\\example.iap");
+            if (!string.IsNullOrEmpty(downloadArgument.Value) && downloadArgument.Value.Contains(";")) Chocolatey.Download(downloadArgument.Value.Split(';').ToList());
+            else if (!string.IsNullOrEmpty(downloadArgument.Value) && !downloadArgument.Value.Contains(";")) Chocolatey.Download(new List<string> { downloadArgument.Value });
+            if (!noInstallArgument.Value) StartInstallation();
         }
 
         /// <summary>
@@ -50,7 +82,7 @@ namespace PIN.Core.Managers
         /// <param name="args">if set to <c>true</c> then the application will be executed with all the designed arguments.</param>
         public void StartInstallation(bool args = true)
         {
-            if(InstallList.Count == 0 || Arguments.Value.ContainsKey("update")) return;
+            if(InstallList.Count == 0) return;
 
             ProgressBar = new ProgressBar(InstallList.Count, "", new ProgressBarOptions
             {
@@ -74,7 +106,7 @@ namespace PIN.Core.Managers
         /// Validates the installations.
         /// </summary>
         /// <returns></returns>
-        void ValidateInstallations()
+        void ValidateInstallations(ValueArgument<string> IgnoredArgument)
         {
             InstallList = new Scanner().Scan();
             foreach (IAP error in InstallList.Where(iap => !iap.ValidateInstall()).ToList()) InstallList.Remove(error);
@@ -87,17 +119,17 @@ namespace PIN.Core.Managers
 
             if (InvalidPackages.Count > 0) { ProgressChanged?.Invoke(InvalidPackages.Select(invalid => invalid.Packagename).ToList(), NotificationType.Installaltioninvalid); }
 
+            InstallList.Sort();
 
-            if (Arguments.Value.ContainsKey("ignore"))
+            if (string.IsNullOrEmpty(IgnoredArgument?.Value)) return;
+
+            foreach (var packagename in IgnoredArgument.Value.Split(';'))
             {
-                foreach (var packagename in Arguments.Value.SelectMany(aa => aa.Value))
-                {
-                    IgnoredList?.Add(InstallList.Find(x => string.Equals(x.Packagename, packagename, StringComparison.CurrentCultureIgnoreCase)));
-                    NLogger.Debug($"{packagename} is ignored.");
-                }
-
-                InstallList = Utils.Remove(InstallList, IgnoredList);
+                IgnoredList?.Add(InstallList.Find(x => string.Equals(x.Packagename, packagename, StringComparison.CurrentCultureIgnoreCase)));
+                NLogger.Debug($"{packagename} is ignored.");
             }
+
+            InstallList = Utils.Remove(InstallList, IgnoredList);
 
             InstallList.Sort();
         }

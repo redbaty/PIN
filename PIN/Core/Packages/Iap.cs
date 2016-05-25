@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using PIN.Core.Managers;
 
 namespace PIN.Core.Packages
 {
@@ -11,6 +10,9 @@ namespace PIN.Core.Packages
     {
         [JsonIgnore]
         public string BasePath { get; set; }
+
+        [JsonIgnore]
+        public string FileName { get; set; }
 
         public string Version { get; set; }
 
@@ -22,7 +24,6 @@ namespace PIN.Core.Packages
         public int InstallationIndex { get; set; }
         public bool ChocolateySupport { get; set; }
 
-        public string FileName { get; set; }
 
         public IAP()
         {
@@ -63,7 +64,7 @@ namespace PIN.Core.Packages
         /// <param name="execx64">The x64 executable path.</param>
         /// <param name="iIndex">Installation priority.</param>
         /// <param name="bPath">The base path.</param>
-        public IAP(string name, string version, bool supportChocolatey, string arguments, string exec, string execx64, int iIndex, string bPath)
+        public IAP(string name, string version, bool supportChocolatey, string arguments, string exec, string execx64, int iIndex, string bPath = "")
         {
             Packagename = name;
             Version = version;
@@ -174,10 +175,10 @@ namespace PIN.Core.Packages
             if (info.Version > new Version(Version))
             {
                 if (!string.IsNullOrEmpty(info.Powershell.URL86))
-                    Download.StartDownload(info.Powershell.URL86, $"{BasePath}{Executable}", Packagename);
+                    CDownloader.StartDownload(info.Powershell.URL86, $"{BasePath}{Executable}", Packagename);
 
                 if (!string.IsNullOrEmpty(info.Powershell.URL64))
-                    Download.StartDownload(info.Powershell.URL64, $"{BasePath}{Executablex64}", $"{Packagename} x64");
+                    CDownloader.StartDownload(info.Powershell.URL64, $"{BasePath}{Executablex64}", $"{Packagename} x64");
 
                 Version = info.Version.ToString();
                 Save(BasePath + FileName);
@@ -187,6 +188,13 @@ namespace PIN.Core.Packages
             else
                 Utils.WriteInfo($"{Packagename} does not need updates");
             
+        }
+
+        public static void Example(string path)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            IAP pacakge = new IAP("Example","0.0.0.0", false, "-s", "test.exe", "test64.exe", 0, Path.GetDirectoryName(path) + @"\");  
+            pacakge.Save(path);      
         }
     }
 }

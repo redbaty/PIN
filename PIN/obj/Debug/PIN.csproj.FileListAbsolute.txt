@@ -72,3 +72,7 @@ C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\NLog.xml
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\NuGet.Squirrel.pdb
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\Splat.pdb
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\Squirrel.pdb
+C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\CommandLineArgumentsParser.dll
+C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\ReflectionBridge.dll
+C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\CommandLineArgumentsParser.xml
+C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\ReflectionBridge.xml

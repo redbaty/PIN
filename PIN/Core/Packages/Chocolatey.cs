@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using NLog;
-using PIN.Core.Managers;
 
 namespace PIN.Core.Packages
 {
     class Chocolatey
     {
-        public ChocolateyInfo ChocolateyInfo { get; set; }
-        public IAP Package { get; set; }
-        private Paths CPaths { get; } = new Paths();
-        private Logger NLogger = LogManager.GetCurrentClassLogger();
-
+        public ChocolateyInfo ChocolateyInfo { get; set; }       
+        public IAP Package { get; set; }     
         public string PackageName { get; set; }
+        private Paths CPaths { get; } = new Paths();
+
+
+        private readonly Logger _nLogger = LogManager.GetCurrentClassLogger();
+
+ 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Chocolatey"/> class.
@@ -22,7 +26,7 @@ namespace PIN.Core.Packages
         {
             if (pap.Contains("."))
             {
-                NLogger.Info("Expected chocolatey package name, but got a file instead.");
+                _nLogger.Info("Expected chocolatey package name, but got a file instead.");
                 throw new Exception("Expected chocolatey package name, but got a file instead.");
             }
 
@@ -46,23 +50,24 @@ namespace PIN.Core.Packages
 
             try
             {
-                Download.StartDownload(ChocolateyInfo.Powershell.URL86,
+                CDownloader.StartDownload(ChocolateyInfo.Powershell.URL86,
                     $"{downloadDirectory}{PackageName}.{ChocolateyInfo.FileType}", PackageName);
-                Download.StartDownload(ChocolateyInfo.Powershell.URL64,
+                CDownloader.StartDownload(ChocolateyInfo.Powershell.URL64,
                     $"{downloadDirectory}{PackageName}64.{ChocolateyInfo.FileType}", $"{PackageName} x64");
             }
             catch (Exception e)
             {
-                Download.DownloadProgressBar.Tick();
-                NLogger.Error($"{PackageName} failed to download. {e}");
+                CDownloader.DownloadProgressBar.Tick();
+                _nLogger.Error($"{PackageName} failed to download. {e}");
             }
         }
-    }
 
-    class Paths
-    {
-        public string PowerShellFile { get; set; }
-        public string CompressedFile { get; set; }
-        public string PackageFile { get; set; }
+        public static void Download(List<string> packages)
+        {
+            foreach (Chocolatey download in packages.Select(package => new Chocolatey(package)))
+            {
+                download.StartDownload();
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace PIN.Core.Managers
 {
     class Download
     {
-        public DownloaderWebClient WebHandler { get; set; } = new DownloaderWebClient();
+        public WebDown WebHandler { get; set; } = new WebDown();
         public ChildProgressBar ProgressBar { get; set; }
         public int Progress { get; set; }
         public string PackageName { get; set; }

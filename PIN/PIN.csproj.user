@@ -12,6 +12,9 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-noinstall -update</StartArguments>
+    <StartArguments>--language pt-br -d skype</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <StartArguments>--noinstall --language pt-br -h --download googlechrome%3bfirefox</StartArguments>
   </PropertyGroup>
 </Project>
