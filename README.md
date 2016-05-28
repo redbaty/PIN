@@ -4,7 +4,10 @@ PIN, or package installer aims to help massive repetitive programs installation,
 [To the release page !](https://github.com/redbaty/PIN/releases)
 
 # Usage
-Execute pin, then it'll search through it's directory for .iap files.
+When PIN is executed it will
+* Search through its base directory for .iap files.
+* Sort them by "InstallationIndex"
+* Execute them using the desired arguments and the compatible plataform. (x86 / x64)
 
 # Translations
 In 1.1.5.0 translation support were finally added. You can sumbit it on your language using the following form :
@@ -21,10 +24,13 @@ In 1.1.5.0 translation support were finally added. You can sumbit it on your lan
 }
 ```
 
-then save it to yourlanguage.tap, that is .tap is the default language extension.
+save it to yourlanguage.tap and launch PIN with the `-l yourlanguage` or `--language yourlanguage` argument.
+
+# Updates
+PIN can update packages that are supported by chocolatey, all you have to do is set **"ChocolateySupport"** to **true** in the desired package and execute PIN with the `-u` or `--update` argument. This will update **all packages that have "ChocolateySupport" set to true.**
 
 # Arguments
-All arguments can be displayed by launching PIN with -h.
+All arguments can be displayed by launching PIN with `-h` or `--help`.
 
 # Installation File (.iap)
 The installation file goes by the extension .iap and contains the instructions to install the desired program/package. To create your own, you'll have to use the following form :
@@ -41,7 +47,7 @@ The installation file goes by the extension .iap and contains the instructions t
 }
 ```
 
-You can launch PIN with the argument -e to create a .iap example.
+You can launch PIN with the argument `-e` or `--example` to create a .iap example.
 
 **Being**
 
