@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using CommandLineParser.Arguments;
 using NLog;
 using PIN.Core.Packages;
@@ -14,18 +15,12 @@ namespace PIN.Core.Managers
 {
     class Manager
     {
-        #region Lists
-
         public List<IAP> IgnoredList { get; set; } = new List<IAP>();
         public List<IAP> InstallList { get; set; }
         public List<IAP> InvalidPackages { get; set; }
-
-        #endregion
+        public ProgressBar ProgressBar { get; set; }
 
         private Logger NLogger = LogManager.GetCurrentClassLogger();
-        public ProgressBar ProgressBar { get; set; }       
-
-
         public event ManagerProgress ProgressChanged;
         internal delegate void ManagerProgress(List<string> data, NotificationType notificationType);
 
@@ -72,7 +67,7 @@ namespace PIN.Core.Managers
             if (helpArgument.Value) parser.ShowUsage();
             if (exampleArgument.Value) IAP.Example($"{Directory.GetCurrentDirectory()}\\Packages\\Example\\example.iap");
             if (!string.IsNullOrEmpty(downloadArgument.Value) && downloadArgument.Value.Contains(";")) Chocolatey.Download(downloadArgument.Value.Split(';').ToList());
-            else if (!string.IsNullOrEmpty(downloadArgument.Value) && !downloadArgument.Value.Contains(";")) Chocolatey.Download(new List<string> { downloadArgument.Value });
+            else if (!string.IsNullOrEmpty(downloadArgument.Value) && !downloadArgument.Value.Contains(";")) Chocolatey.Download(new List<string> {downloadArgument.Value});
             if (!noInstallArgument.Value) StartInstallation();
         }
 

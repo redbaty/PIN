@@ -55,3 +55,29 @@ Nome do parâmetro: requestUriString
    em PIN.Core.Packages.CDownloader.StartDownload(String url, String path, String packagename)
    em PIN.Core.Packages.Chocolatey.StartDownload(String path)
 [05-24 23:11:11 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Skype
+[05-25 19:55:59 @ PIN.Core.Managers.Manager] Packages loaded. Valid [1] Ignored [0] Invalid [0]
+[05-25 20:02:50 @ PIN.Core.Managers.Manager] Packages loaded. Valid [1] Ignored [0] Invalid [0]
+[05-25 20:06:16 @ PIN.Core.Managers.Manager] Packages loaded. Valid [1] Ignored [0] Invalid [0]
+[05-25 20:40:27 @ PIN.Core.Managers.Manager] Packages loaded. Valid [1] Ignored [0] Invalid [0]
+[05-25 20:48:29 @ PIN.Core.Managers.Manager] Packages loaded. Valid [1] Ignored [0] Invalid [0]
+[05-25 20:48:34 @ PIN.Core.Packages.Chocolatey] skype failed to download. System.ArgumentNullException: Valor não pode ser nulo.
+Nome do parâmetro: requestUriString
+   em System.Net.WebRequest.Create(String requestUriString)
+   em PIN.Core.Utils.GetDownloadSize(String url)
+   em PIN.Core.Packages.CDownloader.StartDownload(String url, String path, String packagename)
+   em PIN.Core.Packages.Chocolatey.StartDownload(String path)
+[05-25 20:50:33 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Skype
+[05-25 20:57:29 @ PIN.Core.Managers.Manager] Packages loaded. Valid [1] Ignored [0] Invalid [0]
+[05-25 20:57:34 @ PIN.Core.Packages.Chocolatey] skype failed to download. System.ArgumentNullException: Valor não pode ser nulo.
+Nome do parâmetro: requestUriString
+   em System.Net.WebRequest.Create(String requestUriString)
+   em PIN.Core.Utils.GetDownloadSize(String url)
+   em PIN.Core.Packages.CDownloader.StartDownload(String url, String path, String packagename)
+   em PIN.Core.Packages.Chocolatey.StartDownload(String path)
+[05-25 20:59:18 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Skype
+[05-25 21:00:26 @ PIN.Core.Managers.Manager] Packages loaded. Valid [1] Ignored [0] Invalid [0]
+[05-25 21:02:17 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Firefox
+[05-25 21:02:48 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Googlechrome
+[05-25 21:03:08 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Googlechrome x64
+[05-25 21:04:44 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Firefox x64
+[05-28 00:50:20 @ PIN.Core.Managers.Manager] Packages loaded. Valid [3] Ignored [0] Invalid [0]

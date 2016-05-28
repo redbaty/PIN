@@ -1,0 +1,9 @@
+{
+  "Version": "7.24.0.104",
+  "Packagename": "skype",
+  "Arguments": "/qn /norestart STARTSKYPE=FALSE TRANSFORMS=:RemoveDesktopShortcut.mst TRANSFORMS=:RemoveStartup.mst",
+  "Executable": "skype.msi",
+  "Executablex64": "skype64.msi",
+  "InstallationIndex": 0,
+  "ChocolateySupport": true
+}

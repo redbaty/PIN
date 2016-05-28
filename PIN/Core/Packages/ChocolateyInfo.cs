@@ -49,10 +49,7 @@ namespace PIN.Core.Packages
             catch (WebException x)
             {
                 if (x.Status == WebExceptionStatus.ProtocolError)
-                {
-                    throw new Exception(
-                        "Can't find the package on chocolatey servers. ( Make sure the packaname is exacly the same as in the website )");
-                }
+                    throw new Exception("Can't find the package on chocolatey servers. ( Make sure the packaname is exacly the same as in the website )");
 
                 throw new Exception($"Error while downloading {pap} - {x} @ ChocolateyInfo");
             }

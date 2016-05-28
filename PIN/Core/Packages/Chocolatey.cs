@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using NLog;
 
 namespace PIN.Core.Packages
@@ -64,10 +65,24 @@ namespace PIN.Core.Packages
 
         public static void Download(List<string> packages)
         {
-            foreach (Chocolatey download in packages.Select(package => new Chocolatey(package)))
+            foreach (var package in packages)
             {
-                download.StartDownload();
+                try
+                {
+                    var download = new Chocolatey(package);
+                    download.StartDownload();
+                }
+                catch (Exception ex)
+                {
+                    Utils.WriteError($"An error occurred while downloading {package} - {ex}");
+                }
             }
+
+            while (CDownloader.DownloadProgressBar.CurrentTick < CDownloader.DownloadProgressBar.MaxTicks)
+            {
+                Thread.Sleep(20);
+            }
+            CDownloader.DownloadProgressBar.Dispose();
         }
     }
 }
