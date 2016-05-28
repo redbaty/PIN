@@ -4,8 +4,9 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NLog;
+using PIN.Core.Misc;
 
-namespace PIN.Core
+namespace PIN.Core.Managers
 {
     class Language
     {
@@ -25,12 +26,15 @@ namespace PIN.Core
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private static Logger NLogger = LogManager.GetCurrentClassLogger();
 
-        
 
-        public static void FindTranslation(string tr)
+
+        /// <summary>
+        /// Search for the desired translation.
+        /// </summary>
+        /// <param name="tr">The translation file name.</param>
+        public static void SearchTranslation(string tr)
         {
-            Scanner scn = new Scanner();
-            var scnResults = scn.Find($"{tr}.tap");
+            var scnResults = new Scanner().Find($"{tr}.tap");
 
             if (scnResults?.Length != 0)
             {

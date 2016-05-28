@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using NLog;
+using PIN.Core.Misc;
 using ShellProgressBar;
 // ReSharper disable InconsistentNaming
 // ReSharper disable FieldCanBeMadeReadOnly.Local
@@ -9,7 +10,7 @@ namespace PIN.Core.Managers
 {
     class Download
     {
-        public WebDown WebHandler { get; set; } = new WebDown();
+        public WebDownloader WebHandler { get; set; } = new WebDownloader();
         public ChildProgressBar ProgressBar { get; set; }
         public int Progress { get; set; }
         public string PackageName { get; set; }
@@ -23,6 +24,12 @@ namespace PIN.Core.Managers
             CollapseWhenFinished = true
         };
 
+        /// <summary>
+        /// Start the download of a chocolatey package.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="path">The path to download to.</param>
+        /// <param name="packagename">The package name.</param>
         public static void StartDownload(string url, string path, string packagename = "")
         {
             Download downloader = new Download {PackageName = Utils.FirstCharToUpper(packagename)};

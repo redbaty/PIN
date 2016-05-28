@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using static PIN.Core.Language;
+using PIN.Core.Misc;
+using static PIN.Core.Managers.Language;
 
 namespace PIN.Core.Managers
 {

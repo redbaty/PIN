@@ -4,6 +4,8 @@ using System.Net;
 using Ionic.Zip;
 using Newtonsoft.Json;
 using PIN.Core.jModels;
+using PIN.Core.Misc;
+
 // ReSharper disable InconsistentNaming
 
 namespace PIN.Core.Packages
@@ -38,6 +40,14 @@ namespace PIN.Core.Packages
             File.Delete(Path.CompressedFile);
         }
 
+        /// <summary>
+        /// Downloads the basic package which contains informations about the chocolatey server version of the package.
+        /// </summary>
+        /// <param name="pap">The package name.</param>
+        /// <exception cref="Exception">
+        /// Can't find the package on chocolatey servers. ( Make sure the packaname is exacly the same as in the website )
+        /// or
+        /// </exception>
         public void DownloadBasicPackage(string pap)
         {
             #region Download file

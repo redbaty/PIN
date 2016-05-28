@@ -81,3 +81,7 @@ Nome do parâmetro: requestUriString
 [05-25 21:03:08 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Googlechrome x64
 [05-25 21:04:44 @ PIN.Core.Packages.CDownloader] Sucessfully downloaded Firefox x64
 [05-28 00:50:20 @ PIN.Core.Managers.Manager] Packages loaded. Valid [3] Ignored [0] Invalid [0]
+[05-28 01:39:13 @ PIN.Core.Managers.Manager] Packages loaded. Valid [3] Ignored [0] Invalid [0]
+[05-28 01:39:27 @ PIN.Core.Managers.Manager] Packages loaded. Valid [3] Ignored [0] Invalid [0]
+[05-28 01:39:38 @ PIN.Core.Managers.Manager] Packages loaded. Valid [3] Ignored [0] Invalid [0]
+[05-28 01:41:06 @ PIN.Core.Managers.Manager] Packages loaded. Valid [3] Ignored [0] Invalid [0]

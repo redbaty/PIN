@@ -6,10 +6,10 @@ using System.Net;
 using System.Runtime.InteropServices;
 using System.Xml;
 using Newtonsoft.Json;
+using PIN.Core.Managers;
 using PIN.Core.Packages;
-using static PIN.Core.Language;
 
-namespace PIN.Core
+namespace PIN.Core.Misc
 {
     class Utils
     {
@@ -53,7 +53,7 @@ namespace PIN.Core
         {
             Version version = typeof (Program).Assembly.GetName().Version;
             WriteinColor(ConsoleColor.Green, $"PIN {version}");
-            WriteinColor(ConsoleColor.Gray, string.Format(CurrentLanguage.GithubInformation, "https://github.com/redbaty/PIN/") + "\n");
+            WriteinColor(ConsoleColor.Gray, string.Format(Language.CurrentLanguage.GithubInformation, "https://github.com/redbaty/PIN/") + "\n");
         }
 
         /// <summary>
@@ -115,12 +115,12 @@ namespace PIN.Core
         /// <summary>
         /// Removes the specified remove list from the source list.
         /// </summary>
-        /// <param name="SourceList">The source list.</param>
-        /// <param name="RemoveList">The list to remove.</param>
+        /// <param name="sourceList">The source list.</param>
+        /// <param name="removeList">The list to remove.</param>
         /// <returns></returns>
-        public static List<IAP> Remove(List<IAP> SourceList,List<IAP> RemoveList)
+        public static List<Package> Remove(List<Package> sourceList, List<Package> removeList)
         {
-            return SourceList.Except(RemoveList).ToList();
+            return sourceList.Except(removeList).ToList();
         }
 
         public static string FirstCharToUpper(string input)
@@ -135,11 +135,6 @@ namespace PIN.Core
             source = source.Substring(source.IndexOf(valuename, StringComparison.Ordinal)).Split('\n')[0];
 
             return source.Contains("'") ? source.Substring(source.IndexOf("'", StringComparison.Ordinal)).Replace("'", "") : source.Substring(source.IndexOf("\"", StringComparison.Ordinal)).Replace("\"", "");
-        }
-
-        public static double ConvertBytesToMegabytes(long bytes)
-        {
-            return (bytes / 1024f) / 1024f;
         }
 
         public static int GetDownloadSize(string url)

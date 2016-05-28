@@ -1,4 +1,5 @@
-﻿namespace PIN.Core.jModels
+﻿// ReSharper disable InconsistentNaming
+namespace PIN.Core.jModels
 {
     public class Metadata
     {

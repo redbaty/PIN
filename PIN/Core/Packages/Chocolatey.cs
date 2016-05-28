@@ -1,23 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading;
 using NLog;
+using PIN.Core.Misc;
 
 namespace PIN.Core.Packages
 {
     class Chocolatey
     {
-        public ChocolateyInfo ChocolateyInfo { get; set; }       
-        public IAP Package { get; set; }     
+        public ChocolateyInfo ChocolateyInfo { get; set; }
+        public Paths CPaths { get; } = new Paths();
         public string PackageName { get; set; }
-        private Paths CPaths { get; } = new Paths();
 
 
         private readonly Logger _nLogger = LogManager.GetCurrentClassLogger();
 
- 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Chocolatey"/> class.
@@ -40,49 +36,31 @@ namespace PIN.Core.Packages
             ChocolateyInfo = new ChocolateyInfo(PackageName);
         }
 
-        public void StartDownload(string path = "")
+        /// <summary>
+        /// Downloads the specified packaged.
+        /// </summary>
+        /// <param name="path">The path to download to.</param>
+        public void Download(string path = "")
         {
             var downloadDirectory = string.IsNullOrEmpty(path) ? $"Downloads\\{PackageName}\\" : path;
             var fullDownloadDirectory = Directory.GetCurrentDirectory() + $"\\{downloadDirectory}";
-            var downloadedPackage = new IAP(PackageName, ChocolateyInfo.Version.ToString(), true,
-                ChocolateyInfo.Powershell.Argument, $"{PackageName}.{ChocolateyInfo.FileType}",
-                $"{PackageName}64.{ChocolateyInfo.FileType}", 0, fullDownloadDirectory);
-            downloadedPackage.Save($"{downloadDirectory}{PackageName}.iap");
+            new Package(PackageName, ChocolateyInfo.Version.ToString(), true, ChocolateyInfo.Powershell.Argument,
+                $"{PackageName}.{ChocolateyInfo.FileType}", $"{PackageName}64.{ChocolateyInfo.FileType}", 0,
+                fullDownloadDirectory).Save($"{downloadDirectory}{PackageName}{Package.FileType}");
 
             try
             {
-                CDownloader.StartDownload(ChocolateyInfo.Powershell.URL86,
+                ChocolateyDownloader.StartDownload(ChocolateyInfo.Powershell.URL86,
                     $"{downloadDirectory}{PackageName}.{ChocolateyInfo.FileType}", PackageName);
-                CDownloader.StartDownload(ChocolateyInfo.Powershell.URL64,
+                ChocolateyDownloader.StartDownload(ChocolateyInfo.Powershell.URL64,
                     $"{downloadDirectory}{PackageName}64.{ChocolateyInfo.FileType}", $"{PackageName} x64");
             }
             catch (Exception e)
             {
-                CDownloader.DownloadProgressBar.Tick();
+                ChocolateyDownloader.DownloadProgressBar.Tick();
                 _nLogger.Error($"{PackageName} failed to download. {e}");
             }
         }
 
-        public static void Download(List<string> packages)
-        {
-            foreach (var package in packages)
-            {
-                try
-                {
-                    var download = new Chocolatey(package);
-                    download.StartDownload();
-                }
-                catch (Exception ex)
-                {
-                    Utils.WriteError($"An error occurred while downloading {package} - {ex}");
-                }
-            }
-
-            while (CDownloader.DownloadProgressBar.CurrentTick < CDownloader.DownloadProgressBar.MaxTicks)
-            {
-                Thread.Sleep(20);
-            }
-            CDownloader.DownloadProgressBar.Dispose();
-        }
     }
 }

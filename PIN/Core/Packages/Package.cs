@@ -3,10 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using PIN.Core.Misc;
 
 namespace PIN.Core.Packages
 {
-    class IAP : IComparable<IAP>
+    class Package : IComparable<Package>
     {
         [JsonIgnore]
         public string BasePath { get; set; }
@@ -15,7 +16,6 @@ namespace PIN.Core.Packages
         public string FileName { get; set; }
 
         public string Version { get; set; }
-
         public string Packagename { get; set; }     
         public string Arguments { get; set; }
         public string Executable { get; set; }
@@ -24,21 +24,22 @@ namespace PIN.Core.Packages
         public int InstallationIndex { get; set; }
         public bool ChocolateySupport { get; set; }
 
+        public static string FileType = ".iap";
 
-        public IAP()
+        public Package()
         {
             
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IAP"/> class.
+        /// Initializes a new instance of the <see cref="Package"/> class.
         /// </summary>
         /// <param name="path">The initial .</param>
-        public IAP(string path)
+        public Package(string path)
         {          
             if (File.Exists(path))
             {
-                IAP x = JsonConvert.DeserializeObject<IAP>(File.ReadAllText(path));
+                Package x = JsonConvert.DeserializeObject<Package>(File.ReadAllText(path));
                 Packagename = x.Packagename;
                 Version = x.Version;
                 ChocolateySupport = x.ChocolateySupport;
@@ -54,7 +55,7 @@ namespace PIN.Core.Packages
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="IAP"/> class.
+        /// Initializes a new instance of the <see cref="Package"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="version">The local version.</param>
@@ -64,7 +65,7 @@ namespace PIN.Core.Packages
         /// <param name="execx64">The x64 executable path.</param>
         /// <param name="iIndex">Installation priority.</param>
         /// <param name="bPath">The base path.</param>
-        public IAP(string name, string version, bool supportChocolatey, string arguments, string exec, string execx64, int iIndex, string bPath = "")
+        public Package(string name, string version, bool supportChocolatey, string arguments, string exec, string execx64, int iIndex, string bPath = "")
         {
             Packagename = name;
             Version = version;
@@ -160,7 +161,7 @@ namespace PIN.Core.Packages
         /// </summary>
         /// <param name="comparePart">The compare part.</param>
         /// <returns></returns>
-        public int CompareTo(IAP comparePart)
+        public int CompareTo(Package comparePart)
         {
             if (comparePart == null)
                 return 1;
@@ -175,10 +176,10 @@ namespace PIN.Core.Packages
             if (info.Version > new Version(Version))
             {
                 if (!string.IsNullOrEmpty(info.Powershell.URL86))
-                    CDownloader.StartDownload(info.Powershell.URL86, $"{BasePath}{Executable}", Packagename);
+                    ChocolateyDownloader.StartDownload(info.Powershell.URL86, $"{BasePath}{Executable}", Packagename);
 
                 if (!string.IsNullOrEmpty(info.Powershell.URL64))
-                    CDownloader.StartDownload(info.Powershell.URL64, $"{BasePath}{Executablex64}", $"{Packagename} x64");
+                    ChocolateyDownloader.StartDownload(info.Powershell.URL64, $"{BasePath}{Executablex64}", $"{Packagename} x64");
 
                 Version = info.Version.ToString();
                 Save(BasePath + FileName);
@@ -192,9 +193,15 @@ namespace PIN.Core.Packages
 
         public static void Example(string path)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-            IAP pacakge = new IAP("Example","0.0.0.0", false, "-s", "test.exe", "test64.exe", 0, Path.GetDirectoryName(path) + @"\");  
-            pacakge.Save(path);      
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+                new Package("Example", "0.0.0.0", false, "-s", "test.exe", "test64.exe", 0, Path.GetDirectoryName(path) + @"\").Save(path);
+            }
+            catch (Exception ex)
+            {
+                Utils.WriteError($"An error occurred while generating an example package. {ex}");
+            }
         }
     }
 }

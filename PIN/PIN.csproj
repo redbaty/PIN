@@ -99,23 +99,22 @@
   <ItemGroup>
     <Compile Include="Core\Managers\Notification.cs" />
     <Compile Include="Core\Packages\ChocolateyInfo.cs" />
-    <Compile Include="Core\Packages\CDownloader.cs" />
-    <Compile Include="Core\Packages\Paths.cs" />
+    <Compile Include="Core\Packages\ChocolateyDownloader.cs" />
+    <Compile Include="Core\Misc\Paths.cs" />
     <Compile Include="Core\Packages\Powershell.cs" />
-    <Compile Include="Core\WebDown.cs">
+    <Compile Include="Core\Managers\WebDownloader.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Managers\Download.cs" />
-    <Compile Include="Core\ConsoleUtils\ConsoleLine.cs" />
     <Compile Include="Core\Managers\Manager.cs" />
-    <Compile Include="Core\Packages\Iap.cs" />
+    <Compile Include="Core\Packages\Package.cs" />
     <Compile Include="Core\jModels\PackageInformation.cs" />
     <Compile Include="Core\Packages\Chocolatey.cs" />
-    <Compile Include="Core\Language.cs" />
-    <Compile Include="Core\Scanner.cs" />
-    <Compile Include="Core\Utils.cs" />
+    <Compile Include="Core\Managers\Language.cs" />
+    <Compile Include="Core\Misc\Scanner.cs" />
+    <Compile Include="Core\Misc\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -142,7 +141,9 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\ConsoleUtils\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

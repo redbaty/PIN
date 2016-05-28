@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Net;
 
-namespace PIN.Core
+namespace PIN.Core.Managers
 {
-    class WebDown : WebClient
+    class WebDownloader : WebClient
     {
         protected override WebRequest GetWebRequest(Uri uri)
         {

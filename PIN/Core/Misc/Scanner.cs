@@ -3,14 +3,14 @@ using System.IO;
 using System.Linq;
 using PIN.Core.Packages;
 
-namespace PIN.Core
+namespace PIN.Core.Misc
 {
     class Scanner
     {
 
-        public List<IAP> Scan()
+        public List<Package> Scan()
         {
-            return Directory.GetFiles(Directory.GetCurrentDirectory(), "*.iap", SearchOption.AllDirectories).Select(file => new IAP(file)).ToList();
+            return Directory.GetFiles(Directory.GetCurrentDirectory(), $"*{Package.FileType}", SearchOption.AllDirectories).Select(file => new Package(file)).ToList();
         }
 
         public string[] Find(string name)

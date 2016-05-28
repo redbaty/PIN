@@ -50,3 +50,12 @@
 [05-25 20:57:29 @ PIN.Core.Language] Language is now set to pt-br
 [05-25 21:00:25 @ PIN.Core.Language] Language is now set to pt-br
 [05-28 00:50:20 @ PIN.Core.Language] Language is now set to pt-br
+[05-28 01:39:13 @ PIN.Core.Managers.Language] Language [] was not found, english was loaded.
+[05-28 01:39:13 @ PIN.Core.Managers.Manager] Beginning firefox installation.
+[05-28 01:39:27 @ PIN.Core.Managers.Language] Language [] was not found, english was loaded.
+[05-28 01:39:27 @ PIN.Core.Managers.Manager] Beginning firefox installation.
+[05-28 01:39:29 @ PIN.Core.Managers.Manager] Beginning googlechrome installation.
+[05-28 01:39:29 @ PIN.Core.Managers.Manager] Beginning Example installation.
+[05-28 01:39:38 @ PIN.Core.Managers.Language] Language [] was not found, english was loaded.
+[05-28 01:41:06 @ PIN.Core.Managers.Language] Language [] was not found, english was loaded.
+[05-28 01:41:06 @ PIN.Core.Managers.Manager] Beginning firefox installation.

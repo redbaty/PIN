@@ -1,4 +1,4 @@
-﻿namespace PIN.Core.Packages
+﻿namespace PIN.Core.Misc
 {
     class Paths
     {
