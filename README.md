@@ -1,7 +1,7 @@
 # PIN
-Package Installer is, as the name suggests, a offline package installer. It uses .iap files to get the correct "silent" arguments for a specific program and execute it.
+PIN, or package installer aims to help massive repetitive programs installation, very similar to chocolatey but most importantly with offline support.
 
-[To the release page !.](https://github.com/redbaty/PIN/releases)
+[To the release page !](https://github.com/redbaty/PIN/releases)
 
 # Usage
 Execute pin, then it'll search through it's directory for .iap files.
@@ -11,43 +11,37 @@ In 1.1.5.0 translation support were finally added. You can sumbit it on your lan
 
 ```json
 {
-    "InstallationProgressBarFormat": "{0} of {1} were installed. ({2}%)",
-    "InstallListLoaded": "Installation list loaded.",
-    "InstallationSuccess": "Success !",
+    "InstallListLoaded": "Installation list loaded !.",
+    "InstallationSuccess": "All packages installed sucessfully !",
     "InstallationPackageInvalid": "Invalid packages: {0}",
-    "DownloadProgressBarFormat": "Downloaded {0:F}MB of {1:F}MB. ({2}%)",
-    "GithubInformation": "Help us at github : {0}"
+    "InstallationNoPackageFound": "No valid packages found.",
+    "InstallationProgress": "Installing {0}",
+    "GithubInformation": "Help us at github : {0}",
+    "ProgramDone": "Press any key to exit..."
 }
 ```
 
 then save it to yourlanguage.tap, that is .tap is the default language extension.
 
 # Arguments
-Current supported args are
-
-```
--ignore=package1;package2... (ignore packages)
--install=package1;package2... (download packages)
--update[=package1;package2...] (if not specified update all packages)
--noinstall (do not start any installation)
--lg=language (type in the language to load without the extension)
-```
+All arguments can be displayed by launching PIN with -h.
 
 # Installation File (.iap)
 The installation file goes by the extension .iap and contains the instructions to install the desired program/package. To create your own, you'll have to use the following form :
 
 ```json
 {
-  "Version": "50.0.2661.102",
-  "Packagename": "googlechrome",
-  "Arguments": "/quiet",
-  "Executable": "googlechrome.msi",
-  "Executablex64": "googlechrome64.msi",
+  "Version": "0.0.0.0",
+  "Packagename": "Example",
+  "Arguments": "-s",
+  "Executable": "test.exe",
+  "Executablex64": "test64.exe",
   "InstallationIndex": 0,
-  "ChocolateySupport": true,
-  "FileName": "googlechrome.iap"
+  "ChocolateySupport": false
 }
 ```
+
+You can launch PIN with the argument -e to create a .iap example.
 
 **Being**
 
