@@ -21,8 +21,8 @@ namespace PIN.Core.Managers
         public ProgressBar ProgressBar { get; set; }
 
         private Logger NLogger = LogManager.GetCurrentClassLogger();
-        public event ManagerProgress ProgressChanged;
 
+        public event ManagerProgress ProgressChanged;
         internal delegate void ManagerProgress(List<string> data, NotificationType notificationType);
 
         /// <summary>
@@ -33,21 +33,18 @@ namespace PIN.Core.Managers
             #region Arguments Parsing
 
             var parser = new CommandLineParser.CommandLineParser();
-
             var helpArgument = new SwitchArgument('h', "help", "Show these commands", false);
             var exampleArgument = new SwitchArgument('e', "example", "Create a package example", false);
-            var languageArgument = new ValueArgument<string>('l', "language", "Set the program language");
             var noInstallArgument = new SwitchArgument('n', "noinstall", "Don't install any packages.", false);
             var updateArgument = new SwitchArgument('u', "update", "Update all pin packages.", false);
-            var ignoreArgument = new ValueArgument<string>('i', "ignore", "Ignore the named packages");
-            var downloadArgument = new ValueArgument<string>('d', "download", "Download packages from chocolatey.");
+            var ignoreArgument = new ValueArgument<string>('i', "ignore", "Ignore the named packages") { ValueOptional = false };
+            var downloadArgument = new ValueArgument<string>('d', "download", "Download packages from chocolatey.") { ValueOptional = false };
 
             parser.Arguments.Add(helpArgument);
             parser.Arguments.Add(noInstallArgument);
             parser.Arguments.Add(downloadArgument);
             parser.Arguments.Add(updateArgument);
             parser.Arguments.Add(ignoreArgument);
-            parser.Arguments.Add(languageArgument);
             parser.Arguments.Add(exampleArgument);
 
             #endregion
@@ -55,14 +52,11 @@ namespace PIN.Core.Managers
             try
             {
                 parser.ParseCommandLine(arguments);
-
-                SearchTranslation(languageArgument.Value);
                 Utils.WriteVersion();
 
                 ValidateInstallations(ignoreArgument);
 
-                NLogger.Info(
-                    $"Packages loaded. Valid [{InstallList.Count}] Ignored [{IgnoredList.Count}] Invalid [{InvalidPackages.Count}]");
+                NLogger.Info($"Packages loaded. Valid [{InstallList.Count}] Ignored [{IgnoredList.Count}] Invalid [{InvalidPackages.Count}]");
 
                 if (InstallList.Count == 0)
                 {
@@ -72,8 +66,7 @@ namespace PIN.Core.Managers
                 }
 
                 if (helpArgument.Value) parser.ShowUsage();
-                if (exampleArgument.Value)
-                    Package.Example($"{Directory.GetCurrentDirectory()}\\Packages\\Example\\example{Package.FileType}");
+                if (exampleArgument.Value) Package.Example($"{Directory.GetCurrentDirectory()}\\Packages\\Example\\example{Package.FileType}");
                 if (!string.IsNullOrEmpty(downloadArgument.Value)) Download(downloadArgument.Value);
                 if (!noInstallArgument.Value) StartInstallation();
             }
@@ -109,15 +102,17 @@ namespace PIN.Core.Managers
             }
         }
 
-
+        /// <summary>
+        /// Downloads packages from the specified packagestring.
+        /// </summary>
+        /// <param name="packagestring">The packagestring.</param>
         private void Download(string packagestring)
         {
             if (!packagestring.Contains(";"))
             {
                 try
                 {
-                    var download = new Chocolatey(packagestring);
-                    download.Download();
+                    new Chocolatey(packagestring).Download();
                 }
                 catch (Exception ex)
                 {
@@ -130,8 +125,7 @@ namespace PIN.Core.Managers
                 {
                     try
                     {
-                        var download = new Chocolatey(package);
-                        download.Download();
+                        new Chocolatey(package).Download();
                     }
                     catch (Exception ex)
                     {

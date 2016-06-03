@@ -54,7 +54,6 @@ C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\obj\Debug\PIN.exe
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\obj\Debug\PIN.pdb
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\obj\Debug\PIN.csprojResolveAssemblyReference.cache
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\NLog.config
-C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\Translations\pt-BR.tap
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\PIN.exe
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\PIN.pdb
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\ICSharpCode.SharpZipLib.dll
