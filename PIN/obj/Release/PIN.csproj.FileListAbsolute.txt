@@ -1,6 +1,5 @@
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\PIN.exe.config
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\NLog.config
-C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\Translations\pt-BR.tap
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\PIN.exe
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\PIN.pdb
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\ICSharpCode.SharpZipLib.dll
@@ -23,5 +22,4 @@ C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\obj\Release\PIN.exe
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\obj\Release\PIN.pdb
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\CommandLineArgumentsParser.dll
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\ReflectionBridge.dll
-C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\CommandLineArgumentsParser.xml
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Release\ReflectionBridge.xml
