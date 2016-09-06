@@ -75,3 +75,6 @@ C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\CommandLineArgumentsParser.dll
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\ReflectionBridge.dll
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\CommandLineArgumentsParser.xml
 C:\Users\MVMCJ\Documents\GitHub\PIN\PIN\bin\Debug\ReflectionBridge.xml
+C:\Users\Marcos\Documents\GitHub\PIN\PIN\bin\Debug\PIN.exe.config
+C:\Users\Marcos\Documents\GitHub\PIN\PIN\obj\Debug\PIN.exe
+C:\Users\Marcos\Documents\GitHub\PIN\PIN\obj\Debug\PIN.pdb
