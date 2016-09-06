@@ -8,6 +8,7 @@ using PIN.Core.Misc;
 using PIN.Core.Packages;
 using ShellProgressBar;
 using static PIN.Core.Managers.Language;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable FieldCanBeMadeReadOnly.Local
 
@@ -23,6 +24,7 @@ namespace PIN.Core.Managers
         private Logger NLogger = LogManager.GetCurrentClassLogger();
 
         public event ManagerProgress ProgressChanged;
+
         internal delegate void ManagerProgress(List<string> data, NotificationType notificationType);
 
         /// <summary>
@@ -37,8 +39,14 @@ namespace PIN.Core.Managers
             var exampleArgument = new SwitchArgument('e', "example", "Create a package example", false);
             var noInstallArgument = new SwitchArgument('n', "noinstall", "Don't install any packages.", false);
             var updateArgument = new SwitchArgument('u', "update", "Update all pin packages.", false);
-            var ignoreArgument = new ValueArgument<string>('i', "ignore", "Ignore the named packages") { ValueOptional = false };
-            var downloadArgument = new ValueArgument<string>('d', "download", "Download packages from chocolatey.") { ValueOptional = false };
+            var ignoreArgument = new ValueArgument<string>('i', "ignore", "Ignore the named packages")
+            {
+                ValueOptional = false
+            };
+            var downloadArgument = new ValueArgument<string>('d', "download", "Download packages from chocolatey.")
+            {
+                ValueOptional = false
+            };
 
             parser.Arguments.Add(helpArgument);
             parser.Arguments.Add(noInstallArgument);
@@ -56,18 +64,20 @@ namespace PIN.Core.Managers
 
                 ValidateInstallations(ignoreArgument);
 
-                NLogger.Info($"Packages loaded. Valid [{InstallList.Count}] Ignored [{IgnoredList.Count}] Invalid [{InvalidPackages.Count}]");
+                NLogger.Info(
+                    $"Packages loaded. Valid [{InstallList.Count}] Ignored [{IgnoredList.Count}] Invalid [{InvalidPackages.Count}]");
 
                 if (InstallList.Count == 0)
-                {
                     Utils.WriteError(CurrentLanguage.InstallationNoPackageFound);
-                    ProgressChanged?.Invoke(null, NotificationType.Programdone);
-                    return;
-                }
 
                 if (helpArgument.Value) parser.ShowUsage();
-                if (exampleArgument.Value) Package.Example($"{Directory.GetCurrentDirectory()}\\Packages\\Example\\example{Package.FileType}");
+                if (exampleArgument.Value)
+                    Package.Example($"{Directory.GetCurrentDirectory()}\\Packages\\Example\\example{Package.FileType}");
                 if (!string.IsNullOrEmpty(downloadArgument.Value)) Download(downloadArgument.Value);
+                if (updateArgument.Value)
+                    foreach (var p in new Scanner().Scan())
+                        p.Update();
+
                 if (!noInstallArgument.Value) StartInstallation();
             }
             catch (Exception ex)

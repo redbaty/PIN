@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Managers\Notification.cs" />
+    <Compile Include="Core\Managers\Update.cs" />
     <Compile Include="Core\Packages\ChocolateyInfo.cs" />
     <Compile Include="Core\Packages\ChocolateyDownloader.cs" />
     <Compile Include="Core\Misc\Paths.cs" />

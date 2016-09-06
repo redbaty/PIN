@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NLog;
 using PIN.Core.Misc;
 
 namespace PIN.Core.Packages
@@ -16,19 +17,20 @@ namespace PIN.Core.Packages
         public string FileName { get; set; }
 
         public string Version { get; set; }
-        public string Packagename { get; set; }     
+        public string Packagename { get; set; }
         public string Arguments { get; set; }
         public string Executable { get; set; }
-        public string Executablex64 { get; set; }     
+        public string Executablex64 { get; set; }
 
         public int InstallationIndex { get; set; }
         public bool ChocolateySupport { get; set; }
+
+        private Logger NLogger = LogManager.GetCurrentClassLogger();
 
         public static string FileType = ".iap";
 
         public Package()
         {
-            
         }
 
         /// <summary>
@@ -36,7 +38,7 @@ namespace PIN.Core.Packages
         /// </summary>
         /// <param name="path">The initial .</param>
         public Package(string path)
-        {          
+        {
             if (File.Exists(path))
             {
                 Package x = JsonConvert.DeserializeObject<Package>(File.ReadAllText(path));
@@ -65,7 +67,8 @@ namespace PIN.Core.Packages
         /// <param name="execx64">The x64 executable path.</param>
         /// <param name="iIndex">Installation priority.</param>
         /// <param name="bPath">The base path.</param>
-        public Package(string name, string version, bool supportChocolatey, string arguments, string exec, string execx64, int iIndex, string bPath = "")
+        public Package(string name, string version, bool supportChocolatey, string arguments, string exec,
+            string execx64, int iIndex, string bPath = "")
         {
             Packagename = name;
             Version = version;
@@ -88,10 +91,12 @@ namespace PIN.Core.Packages
                 Process installationProcess;
                 var inst32 = Sumpath(BasePath, Executable);
                 var inst64 = Sumpath(BasePath, Executablex64);
-                
+
                 if (useArguments)
-                    installationProcess = Utils.InternalCheckIsWow64() ? Process.Start(inst64, Arguments) : Process.Start(inst32, Arguments);     
-                else              
+                    installationProcess = Utils.InternalCheckIsWow64()
+                        ? Process.Start(inst64, Arguments)
+                        : Process.Start(inst32, Arguments);
+                else
                     installationProcess = Utils.InternalCheckIsWow64() ? Process.Start(inst64) : Process.Start(inst32);
 
                 installationProcess?.WaitForExit();
@@ -169,34 +174,41 @@ namespace PIN.Core.Packages
             return InstallationIndex.CompareTo(comparePart.InstallationIndex);
         }
 
+        /// <summary>
+        /// Checks chocolatey for updates of this instance.
+        /// </summary>
         public void Update()
-        { 
+        {
             var info = new ChocolateyInfo(Packagename);
-           
-            if (info.Version > new Version(Version))
+
+            if (info.Version > new Version(Version) && ChocolateySupport)
             {
                 if (!string.IsNullOrEmpty(info.Powershell.URL86))
                     ChocolateyDownloader.StartDownload(info.Powershell.URL86, $"{BasePath}{Executable}", Packagename);
 
                 if (!string.IsNullOrEmpty(info.Powershell.URL64))
-                    ChocolateyDownloader.StartDownload(info.Powershell.URL64, $"{BasePath}{Executablex64}", $"{Packagename} x64");
+                    ChocolateyDownloader.StartDownload(info.Powershell.URL64, $"{BasePath}{Executablex64}",
+                        $"{Packagename} x64");
 
                 Version = info.Version.ToString();
                 Save(BasePath + FileName);
-
-                Utils.WriteInfo($"{Packagename} update");
+                NLogger.Debug($"{Packagename} is being updated.");
             }
             else
-                Utils.WriteInfo($"{Packagename} does not need updates");
-            
+                NLogger.Debug($"{Packagename} does not need updates");
         }
 
+        /// <summary>
+        /// Creates a package example at the specified path.
+        /// </summary>
+        /// <param name="path">The path.</param>
         public static void Example(string path)
         {
             try
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(path));
-                new Package("Example", "0.0.0.0", false, "-s", "test.exe", "test64.exe", 0, Path.GetDirectoryName(path) + @"\").Save(path);
+                new Package("Example", "0.0.0.0", false, "-s", "test.exe", "test64.exe", 0,
+                    Path.GetDirectoryName(path) + @"\").Save(path);
             }
             catch (Exception ex)
             {
