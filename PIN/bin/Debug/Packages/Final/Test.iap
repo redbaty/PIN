@@ -1,9 +1,0 @@
-{
-  "Version": "0.0.0.0",
-  "Packagename": "Example",
-  "Arguments": "",
-  "Executable": "Test.bat",
-  "Executablex64": "Test.bat",
-  "InstallationIndex": 0,
-  "ChocolateySupport": false
-}
